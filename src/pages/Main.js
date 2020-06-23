@@ -38,12 +38,15 @@ export default class Main extends Component {
             <View style={styles.containerContent}>
               <Image source={LOGOIMAGE} style={styles.logoImage} />
               <View style={styles.containerButtons}>
-                <View style={[styles.button, { marginBottom: 6}]}>
+                <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
+                  onPress={() => {
+                    this.props.navigation.navigate('RegisterFirstStep')
+                  }}>
                   <Text style={styles.textButton}>SOU GESTANTE</Text>
-                </View>
-                <View style={[styles.button, { marginTop: 6}]}>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, { marginTop: 6}]}>
                   <Text style={styles.textButton}>SOU PROFISSIONAL</Text>                 
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </ImageBackground>
