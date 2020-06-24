@@ -356,9 +356,13 @@ export default class UserMainPage extends Component {
                     <View style={styles.buttonStyle}>
                       <Text style={styles.textButton}>UBSses mais próximas de você</Text>
                     </View>
-                    <View style={styles.buttonStyle}>
-                      <Text style={styles.textButton}>Consultas Pré-natal</Text>
-                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate('Contatos')
+                      }}
+                     style={styles.buttonStyle}>
+                      <Text style={styles.textButton}>Contatos para ajuda</Text>
+                    </TouchableOpacity>
                   </ScrollView>
                 </View>
               </Tab>

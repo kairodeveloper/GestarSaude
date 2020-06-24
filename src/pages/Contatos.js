@@ -6,7 +6,7 @@ import {
     Platform,
 } from 'react-native'
 import {
-    blackSemiTransparent,
+    blackSemiTransparent, colorFundo, fontColor, white,
 } from '../../colors';
 
 export default class Contatos extends Component {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'ios' ? 44 : 0,
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#fff",
+        backgroundColor: colorFundo
     },
 
     containerContent: {
@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
     },
     button: {
         height: 60,
-        borderWidth: 3,
-        borderColor: blackSemiTransparent,
         width: '90%',
-        backgroundColor: '#e5e5e5',
+        backgroundColor: white,
         borderRadius: 12,
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        elevation: 2,
+        shadowOpacity: 10,    
         paddingLeft: 16,
         paddingRight: 16
     },
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     textName: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#5b5959',
+        color: fontColor,
         textAlign: 'left'
     },
     textPhone: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#5b5959',
+        color: fontColor,
         textAlign: 'right'
     }
 });

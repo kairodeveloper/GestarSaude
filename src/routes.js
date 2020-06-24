@@ -6,6 +6,7 @@ import RegistroFirstStep from './pages/register_user/RegistroFirstStep';
 import RegistroSecondStep from './pages/register_user/RegistroSecondStep';
 import RegistroThirdStep from './pages/register_user/RegistroThirdStep';
 import UserMainPage from './pages/user_module/UserMainPage';
+import Contatos from './pages/Contatos';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -55,6 +56,10 @@ const RootStack = createStackNavigator({
     UserMainPage: {
         screen: UserMainPage,
         navigationOptions: navigationOptionsNoShadow
+    },
+    Contatos: {
+        screen: Contatos,
+        navigationOptions: navigationOptions
     }
 },{
     initialRouteName: 'Main'
