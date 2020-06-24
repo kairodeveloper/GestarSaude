@@ -20,38 +20,44 @@ import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFun
 import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE } from '../../images'
 
 export default class Main extends Component {
-  
+
   static navigationOptions = {
     headerShown: false
   }
-  
+
   constructor(props) {
     super(props)
   }
 
   render() {
     return (
-      <View style={styles.safeView}>
-        <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
-        <View style={styles.container}>
-          <ImageBackground source={BACKGROUNDPREGNANTIMAGESEMFUNDO} style={styles.fundoImage}>
-            <View style={styles.containerContent}>
-              <Image source={LOGOIMAGE} style={styles.logoImage} />
-              <View style={styles.containerButtons}>
-                <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
-                  onPress={() => {
-                    this.props.navigation.navigate('RegisterFirstStep')
-                  }}>
-                  <Text style={styles.textButton}>SOU GESTANTE</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, { marginTop: 6}]}>
-                  <Text style={styles.textButton}>SOU PROFISSIONAL</Text>                 
-                </TouchableOpacity>
+        <View style={styles.safeView}>
+          <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
+          <View style={styles.container}>
+            <ImageBackground source={BACKGROUNDPREGNANTIMAGESEMFUNDO} style={styles.fundoImage}>
+              <View style={styles.containerContent}>
+                <Image source={LOGOIMAGE} style={styles.logoImage} />
+                <View style={styles.containerButtons}>
+                  <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
+                                    onPress={() => {
+                                      this.props.navigation.navigate('RegisterFirstStep')
+                                    }}>
+                    <Text style={styles.textButton}>SOU GESTANTE</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.button, { marginTop: 6}]}>
+                    <Text style={styles.textButton}>SOU PROFISSIONAL</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
+                                    onPress={() => {
+                                      this.props.navigation.navigate('SyndromeDefinition')
+                                    }}>
+                    <Text style={styles.textButton}>TESTE</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </ImageBackground>
+            </ImageBackground>
+          </View>
         </View>
-      </View>
     )
   }
 }
@@ -88,18 +94,18 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
-    height: 60, 
-    borderWidth: 3, 
+    height: 60,
+    borderWidth: 3,
     borderColor: blackSemiTransparent,
     width: '90%',
     backgroundColor: colorPrimary,
-    borderRadius: 25, 
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center'
   },
   textButton: {
-    fontSize: 18, 
-    fontWeight: 'bold', 
+    fontSize: 18,
+    fontWeight: 'bold',
     color: white
   }
 });
