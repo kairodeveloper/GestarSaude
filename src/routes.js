@@ -8,6 +8,7 @@ import RegistroThirdStep from './pages/register_user/RegistroThirdStep';
 import UserMainPage from './pages/user_module/UserMainPage';
 import SyndromeDefinition from "./pages/SyndromeDefinition";
 import ConsultationSchedules from "./pages/ConsultationSchedules";
+import Contact from "./pages/Contact";
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -52,7 +53,7 @@ const RootStack = createStackNavigator({
         screen: UserMainPage,
         navigationOptions: navigationOptionsNoShadow
     },
-    Contatos: {
+    Contact: {
         screen: Contact,
         navigationOptions: navigationOptions
     },

@@ -6,13 +6,13 @@ import {
     Platform,
 } from 'react-native'
 import {
-    blackSemiTransparent, colorFundo, fontColor, white,
+    colorFundo, fontColor, white,
 } from '../../colors';
 
-export default class Contatos extends Component {
+export default class Contact extends Component {
 
     static navigationOptions = {
-        title: "Contatos para ajuda"
+        title: "Contact para ajuda"
     }
 
     constructor(props) {
