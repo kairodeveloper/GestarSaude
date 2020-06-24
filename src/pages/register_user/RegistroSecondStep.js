@@ -145,7 +145,7 @@ export default class RegistroSecondStep extends Component {
 
                                     </View>
                                 }
-                                />
+                            />
                         </View>
 
                         <TouchableOpacity
@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
         minHeight: 30,
         marginTop: 16,
         borderWidth: 1,
-        borderRadius: 15
+        borderRadius: 15,
+        backgroundColor: white
     },
     fundoImage: {
         height: '100%'

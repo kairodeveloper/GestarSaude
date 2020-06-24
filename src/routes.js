@@ -5,6 +5,7 @@ import { white, colorPrimary } from '../colors';
 import RegistroFirstStep from './pages/register_user/RegistroFirstStep';
 import RegistroSecondStep from './pages/register_user/RegistroSecondStep';
 import RegistroThirdStep from './pages/register_user/RegistroThirdStep';
+import UserMainPage from './pages/user_module/UserMainPage';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -19,6 +20,20 @@ const navigationOptions = {
     }
 }
 
+const navigationOptionsNoShadow = {
+    headerTitleStyle: {
+        color: white,
+    },
+    headerTitleStyle: {
+        color: white
+    },
+    headerTintColor:  white,
+    headerStyle: {
+        backgroundColor: colorPrimary,
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0
+    }
+}
 
 const RootStack = createStackNavigator({
     Main: {
@@ -36,6 +51,10 @@ const RootStack = createStackNavigator({
     RegistroThirdStep: {
         screen: RegistroThirdStep,
         navigationOptions: navigationOptions
+    },
+    UserMainPage: {
+        screen: UserMainPage,
+        navigationOptions: navigationOptionsNoShadow
     }
 },{
     initialRouteName: 'Main'

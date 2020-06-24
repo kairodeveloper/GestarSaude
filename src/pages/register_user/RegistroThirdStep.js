@@ -19,21 +19,9 @@ import {
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey, fontColor } from '../../../colors';
 import { ICONGIRL, ICONBOY } from '../../../images'
 import {
-    cepPlaceholder,
-    saudacaoStep3,
-    nomeCompletoLabel,
-    nomeCompletoPlaceholder,
-    cepLabel,
-    idadePlaceholder,
-    idadeLabel,
-    bairroLabel,
-    bairroPlaceholder,
-    logradouroLabel,
-    numCasaLabel,
-    logradouroPlaceholder,
-    numCasaPlaceholder,
-    avancarButtonLabel
+    saudacaoStep3
 } from '../../../strings';
+import {NavigationActions, StackActions} from 'react-navigation';                
 
 export default class RegistroThirdStep extends Component {
 
@@ -125,7 +113,17 @@ export default class RegistroThirdStep extends Component {
 
                         <TouchableOpacity
                             onPress={() => {
-
+                                const resetAction = StackActions.reset({
+                                    index: 0,
+                                    actions: [
+                                        NavigationActions.navigate({ 
+                                            routeName: 'UserMainPage',
+                                            params: {teste: 'true'}
+                                        })
+                                    ] 
+                                })
+                            
+                                this.props.navigation.dispatch(resetAction)
                             }}
                             style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 16 }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>FINALIZAR</Text>
@@ -157,7 +155,8 @@ const styles = StyleSheet.create({
         marginTop: 16,
         flex: 1,
         borderWidth: 1,
-        borderRadius: 15
+        borderRadius: 15,
+        backgroundColor: white
     },
     fundoImage: {
         height: '100%'
