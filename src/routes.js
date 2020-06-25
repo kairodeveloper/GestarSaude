@@ -9,6 +9,7 @@ import UserMainPage from './pages/user_module/UserMainPage';
 import SyndromeDefinition from "./pages/SyndromeDefinition";
 import ConsultationSchedules from "./pages/ConsultationSchedules";
 import Contact from "./pages/Contact";
+import RegistroConsulta from './pages/register_data/RegistroConsulta';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -53,7 +54,11 @@ const RootStack = createStackNavigator({
         screen: UserMainPage,
         navigationOptions: navigationOptionsNoShadow
     },
-    Contact: {
+    RegistroConsulta: {
+        screen: RegistroConsulta,
+        navigationOptions: navigationOptions
+    },
+    Contatos: {
         screen: Contact,
         navigationOptions: navigationOptions
     },

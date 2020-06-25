@@ -10,7 +10,7 @@ import {
     KeyboardAvoidingView,
 } from 'react-native'
 import {
-    blackSemiTransparent, colorPrimary, textCard
+    blackSemiTransparent, colorPrimary, textCard, white, colorFundo
 } from '../../colors';
 import ModalForList from "../modals/ModalForList";
 
@@ -319,20 +319,25 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'ios' ? 44 : 0,
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#fff",
+        backgroundColor: colorFundo,
     },
 
     containerContent: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 16
     },
 
     cardContent: {
-        margin: 8,
+        marginTop: 16,
+        marginStart: 16,
+        marginEnd: 16,
         padding: 20,
         textAlign: 'justify',
-        backgroundColor: blackSemiTransparent,
+        backgroundColor: white,
         borderRadius: 10,
+        elevation: 2,
+        shadowOpacity: 10
     },
 
     syndroTitle: {

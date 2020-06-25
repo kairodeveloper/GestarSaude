@@ -12,7 +12,7 @@ import {
 export default class Contact extends Component {
 
     static navigationOptions = {
-        title: "Contact para ajuda"
+        title: "Contatos para ajuda"
     }
 
     constructor(props) {

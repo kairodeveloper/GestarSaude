@@ -18,6 +18,8 @@ import {
 } from 'react-native'
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey } from '../../colors';
 import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE } from '../../images'
+import { removeAll } from '../../realm_services/RealmService';
+import { saveExames } from '../global_components/GlobalFunctions';
 
 export default class Main extends Component {
 
@@ -27,6 +29,9 @@ export default class Main extends Component {
 
   constructor(props) {
     super(props)
+
+    //removeAll()
+    saveExames()
   }
 
   render() {
@@ -44,14 +49,11 @@ export default class Main extends Component {
                                     }}>
                     <Text style={styles.textButton}>SOU GESTANTE</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.button, { marginTop: 6}]}>
-                    <Text style={styles.textButton}>SOU PROFISSIONAL</Text>
-                  </TouchableOpacity>
                   <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
                                     onPress={() => {
                                       this.props.navigation.navigate('SyndromeDefinition')
                                     }}>
-                    <Text style={styles.textButton}>TESTE</Text>
+                    <Text style={styles.textButton}>SOU PROFISSIONAL</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
   button: {
     height: 60,
     borderWidth: 3,
-    borderColor: blackSemiTransparent,
+    borderColor: colorPrimaryDark,
     width: '90%',
     backgroundColor: colorPrimary,
     borderRadius: 25,

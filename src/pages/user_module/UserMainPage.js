@@ -18,7 +18,7 @@ import {
   FlatList
 } from 'react-native'
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey, fontColor, colorButtons, colorGreenDark } from '../../../colors';
-import { ICONUP, ICONDOWN, ICONCHECKED, ICONCALENDAR, ICONHEARTSAUDAVEL, ICONHEARTRISCO } from '../../../images'
+import { ICONUP, ICONDOWN, ICONCHECKED, ICONCALENDAR, ICONHEARTSAUDAVEL, ICONHEARTRISCO, ICONCLOSE } from '../../../images'
 import {
   cepPlaceholder,
   saudacaoStep1,
@@ -37,6 +37,7 @@ import {
 } from '../../../strings';
 import { Container, Header, Content, Tab, Tabs } from 'native-base'
 import { maskForDate } from '../../global_components/GlobalFunctions';
+import { findAllNotRemoved, updateThis, getNextMid, saveThis } from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
 
@@ -47,87 +48,22 @@ export default class UserMainPage extends Component {
   constructor(props) {
     super(props)
     const { navigation } = this.props
-
-    let consultas = []
+    
     let exames = []
+    let examesBD = findAllNotRemoved('Exame')
+    let consultas = findAllNotRemoved('Consulta')
 
-    for (let index = 0; index < 10; index++) {
-      let data = new Date()
-      data.setDate(data.getDate() + 1)
-
-      let consulta = {}
-      consulta.mid = index + 1
-      consulta.data = data
-      consulta.peso = 70
-      consulta.pressaoX = 120
-      consulta.pressaoY = 80
-      consulta.estado = 1
-
-      consultas.push(consulta)
-    }
-
-    let trimestre1 = [
-      "hemograma",
-      "tipagem sanguinea e fator rh",
-      "glicemia em jejum",
-      "teste rápido diagnóstico HIV",
-      "toxoplasmos",
-      "sorologia para hepatite B (HbsAg)",
-      "ultrassonografia obstétrica",
-      "citopatológico de colo de útero"
-    ]
-
-    let trimestre2 = [
-      "teste de tolerância para glicose com 75g"
-    ]
-
-    let trimestre3 = [
-      "hemograma",
-      "glicemia em jejum",
-      "coombs indireto (se for Rh negativo)",
-      "VDRL Anti-HIV",
-      "sorologia para hepatite B (HbsAg)",
-      "repetição toxoplasmose ",
-      "urocultura + urina tipo I (sumário de urina – SU)",
-      "bacterioscopia de secreção vaginal"
-    ]
-
-    let mid = 1
-    trimestre1.map((it) => {
+    examesBD.map((it) => {
       exames.push({
-        mid: mid,
-        trimestre: 1,
-        nome: it,
-        feito: false
+        mid: it.mid,
+        trimestre: it.trimestre,
+        nome: it.nome,
+        feito: it.feito
       })
-
-      mid++
-    })
-
-    trimestre2.map((it) => {
-      exames.push({
-        mid: mid,
-        trimestre: 2,
-        nome: it,
-        feito: false
-      })
-
-      mid++
-    })
-
-    trimestre3.map((it) => {
-      exames.push({
-        mid: mid,
-        trimestre: 3,
-        nome: it,
-        feito: false
-      })
-
-      mid++
     })
 
     this.state = {
-      fullname: "",
+      nameExame: "",
       consultas: consultas,
       exames: exames,
       showTrimestre1: false,
@@ -135,7 +71,9 @@ export default class UserMainPage extends Component {
       showTrimestre2: false,
       rotationT2: '0deg',
       showTrimestre3: false,
-      rotationT3: '0deg'
+      rotationT3: '0deg',
+      showModalExame: false,
+      trimestreSelecionado: 1
     }
   }
 
@@ -163,6 +101,12 @@ export default class UserMainPage extends Component {
     exames.map((it) => {
       if (it.mid == mid) {
         it.feito = !it.feito
+
+        let object = {}
+        object.mid = it.mid
+        object.feito = it.feito
+
+        updateThis('Exame', object, ['feito'])
       }
     })
 
@@ -200,10 +144,168 @@ export default class UserMainPage extends Component {
     return rows
   }
 
+  refreshConsultas = () => {
+    let consultas = findAllNotRemoved('Consulta')
+    this.setState({
+      consultas: consultas
+    })
+  }
+
+  saveExame = () => {
+    let exames = this.state.exames
+    let newExames = []
+
+    let exame = {}
+    exame.mid = getNextMid('Exame')
+    exame.nome = this.state.nameExame
+    exame.trimestre = this.state.trimestreSelecionado
+    exame.feito = false
+    exame.createdAt = new Date()
+    exame.removido = false
+    saveThis('Exame', exame)
+
+    exames.map((it) => {
+      newExames.push(it)
+    })
+
+    newExames.push({
+      mid: exame.mid,
+      trimestre: exame.trimestre,
+      nome: exame.nome,
+      feito: exame.feito
+    })
+
+    this.setState({
+      showModalExame: false,
+      exames: newExames
+    })
+  }
+
   render() {
+    let modal = <Modal
+                  animationType="slide"
+                  visible={this.state.showModalExame}
+                  transparent>
+                  <View style={styles.containerModal}>
+                    <View style={styles.viewContentModal}>
+                      <View style={{
+                        flex: 4,
+                        margin: 10
+                      }}>
+                        <View style={{justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row'}}>
+                          <Text style={{fontSize: 18, fontWeight: 'bold', color: fontColor}}>Novo exame</Text>
+                          <TouchableOpacity onPress={() => {
+                            this.setState({
+                              showModalExame: false
+                            })
+                          }}>
+                            <Image source={ICONCLOSE} style={{height: 20, width: 20}} />
+                          </TouchableOpacity>
+                        </View>
+                        <View style={{marginTop: 6, justifyContent: 'center'}}>
+                          <Text style={{fontSize: 16, color: fontColor}}>Selecione o trimestre</Text>
+                          <View style={{height: 50, flexDirection: 'row'}}>
+                            <TouchableOpacity 
+                              onPress={() => {
+                                this.setState({
+                                  trimestreSelecionado: 1
+                                })
+                              }}
+                              style={[
+                                this.state.trimestreSelecionado==1 ? (
+                                  styles.buttonTrimestreSelecionado
+                                 ) : (
+                                  styles.buttonTrimestre
+                                 ), 
+                                 { marginEnd: 6 }]
+                            }>
+                            <Text style={this.state.trimestreSelecionado==1 ? 
+                                ( 
+                                  styles.textTrimestreSelecionado 
+                                ) : (
+                                  styles.textTrimestre
+                                )
+                            }>1º</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity 
+                              onPress={() => {
+                                this.setState({
+                                  trimestreSelecionado: 2
+                                })
+                              }}
+                              style={[
+                                this.state.trimestreSelecionado==2 ? (
+                                  styles.buttonTrimestreSelecionado
+                                 ) : (
+                                  styles.buttonTrimestre
+                                 ), 
+                                 { marginEnd: 6 }]
+                            }>
+                              
+                            <Text style={this.state.trimestreSelecionado==2 ? 
+                                ( 
+                                  styles.textTrimestreSelecionado 
+                                ) : (
+                                  styles.textTrimestre
+                                )
+                            }>2º</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity 
+                              onPress={() => {
+                                this.setState({
+                                  trimestreSelecionado: 3
+                                })
+                              }}
+                              style={[
+                                this.state.trimestreSelecionado==3 ? (
+                                  styles.buttonTrimestreSelecionado
+                                 ) : (
+                                  styles.buttonTrimestre
+                                 ), 
+                                 { marginStart: 6 }]
+                            }>
+                              <Text style={this.state.trimestreSelecionado==3 ? 
+                                  ( 
+                                    styles.textTrimestreSelecionado 
+                                  ) : (
+                                    styles.textTrimestre
+                                  )
+                              }>3º</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                        <View style={{marginTop: 6, minHeight: 50, justifyContent: 'center'}}>
+                          <Text style={styles.textOverField}>{nomeCompletoLabel}</Text>
+                          <View style={styles.containerTextInput}>
+                            <TextInput
+                              textColor={black}
+                              tintColor={black}
+                              baseColor={black}
+                              value={this.state.nameExame}
+                              style={styles.text}
+                              placeholder={nomeCompletoPlaceholder}
+                              onChangeText={(nameExame) => this.setState({ nameExame })}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.viewForButton}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.saveExame()
+                          }}
+                          style={styles.styleButton}>
+                          <Text style={styles.textForButton}>SALVAR</Text> 
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                  </Modal>
+
     return (
       <View style={styles.safeView}>
         <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
+        {modal}
         <View style={styles.container}>
           <View style={{ height: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
             <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na 4ª semana da sua gravidez</Text>
@@ -229,18 +331,26 @@ export default class UserMainPage extends Component {
                       snapToAlignment={"center"}
                       flex={1}
                       renderItem={({ item }) =>
-                        <View style={{ minHeight: 100, backgroundColor: white, elevation: 2, shadowOpacity: 10, borderRadius: 15, marginBottom: 16, paddingTop: 10, paddingBottom: 10, paddingStart: 6, paddingEnd: 6, justifyContent: 'center', marginRight: 6 }}>
+                        <TouchableOpacity 
+                          onPress={() => {
+                            this.props.navigation.navigate('RegistroConsulta', {
+                              onGoBack: this.refreshConsultas,
+                              midConsulta: item.mid, 
+                              numeroConsultas: this.state.consultas.length
+                            })
+                          }}
+                          style={{ minHeight: 100, backgroundColor: white, elevation: 2, shadowOpacity: 10, borderRadius: 15, marginBottom: 16, paddingTop: 10, paddingBottom: 10, paddingStart: 6, paddingEnd: 6, justifyContent: 'center', marginRight: 6 }}>
                           <View style={{ height: 25, paddingStart: 6 }}>
                             <Text style={{ color: fontColor }}>{maskForDate(item.data)}</Text>
                           </View>
                           <View style={{ minHeight: 50, paddingStart: 6, justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 24, color: fontColor }}>Peso: {item.peso}kg, Pressão: {item.pressaoX / 10}/{item.pressaoY / 10}</Text>
+                            <Text style={{ fontSize: 24, color: fontColor }}>Peso: {item.peso}kg, Pressão: {item.pressao_x }/{item.pressao_y }</Text>
                           </View>
                           <View style={{ height: 25, paddingStart: 6, paddingEnd: 6, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ color: fontColor }}>Estado: {this.getEstadoByCodigo(item.estado)}</Text>
                             <Image source={this.getImageByCodigo(item.estado)} style={{ height: 25, width: 79 }} />
                           </View>
-                        </View>
+                        </TouchableOpacity>
                       }
                     />
 
@@ -248,9 +358,13 @@ export default class UserMainPage extends Component {
                   <View style={{ height: 92, justifyContent: 'center' }}>
                     <TouchableOpacity
                       onPress={() => {
+                        this.props.navigation.navigate('RegistroConsulta', {
+                          onGoBack: this.refreshConsultas,
+                          numeroConsultas: this.state.consultas.length
+                        })
                       }}
                       style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary }}>
-                      <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>ADICIONAR +</Text>
+                      <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>NOVA CONSULTA</Text>
                     </TouchableOpacity>
 
                   </View>
@@ -330,6 +444,9 @@ export default class UserMainPage extends Component {
                   <View style={{ height: 92, marginStart: 16, marginEnd: 16, justifyContent: 'center' }}>
                         <TouchableOpacity
                           onPress={() => {
+                            this.setState({
+                              showModalExame: true
+                            })
                           }}
                           style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary }}>
                           <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>NOVO EXAME</Text>
@@ -407,8 +524,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15
   },
+  containerModal: {
+    flex: 1,
+    backgroundColor: blackSemiTransparent,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  viewForButton: {
+    flex: 1, 
+    padding: 10, 
+    flexDirection: 'column', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  viewContentModal: {
+    minHeight: 300,
+    width: '75%',
+    backgroundColor: colorFundo,
+    borderRadius: 25,
+    padding: 16
+  },
   textOverField: {
-    marginTop: 16,
     fontSize: 16,
     color: fontColor
   },
@@ -439,5 +575,46 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: fontColor
+  },
+  styleButton: {
+    backgroundColor: colorPrimary,
+    height: '100%',
+    width: '100%',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textForButton: {
+    fontSize: 18, 
+    fontWeight: 'bold',
+    color: white
+  },
+  buttonTrimestre: {
+    flex: 1, 
+    borderRadius: 10,
+    backgroundColor: white,
+    elevation: 2,
+    shadowOpacity: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonTrimestreSelecionado: {
+    flex: 1, 
+    borderRadius: 10,
+    backgroundColor: colorPrimaryDark,
+    elevation: 2,
+    shadowOpacity: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textTrimestre: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: fontColor
+  },
+  textTrimestreSelecionado: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: white
   }
 });
