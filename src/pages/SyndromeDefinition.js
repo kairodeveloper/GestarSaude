@@ -30,19 +30,8 @@ export default class SyndromeDefinition extends Component {
 
     constructor(props) {
         super(props)
-    }
 
-    state = {
-        modalVisible: false,
-    }
-
-    toggleModal(visible) {
-        this.setState({modalVisible: visible});
-    }
-
-    render() {
-
-        let items = [
+        this.items = [
             {
                 name: 'Hipertensão Gestacional (HG)',
                 description: 'refere-se à identificação de hipertensão arterial, em ' +
@@ -256,19 +245,35 @@ export default class SyndromeDefinition extends Component {
                     'indicado.'
             }
         ];
+    }
+
+    state = {
+        modalVisible: false,
+    }
+
+    toggleModal(visible) {
+        this.setState({modalVisible: visible});
+    }
+
+    openModal(searchedName) {
+        let syndron = this.items.filter(item => item.name === searchedName);
+        this.toggleModal(true)
+        console.log(syndron[0].name);
+
+    }
+
+    render() {
 
         return (
             <View style={styles.safeView}>
                 <View style={styles.containerContent}>
                     <ScrollView>
                         <View>
-                            {items.map((item) => {
+                            {this.items.map((item) => {
                                 return (
                                     <TouchableOpacity
                                         style={styles.cardContent}
-                                        onPress={() => {
-                                            this.toggleModal(true)
-                                        }}>
+                                        onPress={() => {this.openModal(item.name)}}>
                                         <Text style={styles.syndroTitle}>{item.name}</Text>
                                         <Modal animationType={"slide"} transparent={false}
                                                visible={this.state.modalVisible}>
