@@ -5,15 +5,31 @@ import {
     Text,
     Platform,
     TouchableOpacity,
-    TouchableHighlight,
     ScrollView,
-    Modal,
-    Button,
+    FlatList,
+    KeyboardAvoidingView,
 } from 'react-native'
 import {
     blackSemiTransparent, colorPrimary, textCard
 } from '../../colors';
+import ModalForList from "../modals/ModalForList";
 
+
+class MyItem extends React.Component {
+    _onPress = () => {
+        this.props.onPressItem(this.props.item);
+    };
+    render() {
+        return(
+            <TouchableOpacity
+                {...this.props}
+                onPress={this._onPress}
+            >
+                <Text style={styles.syndroTitle}> {this.props.item.name}</Text>
+            </TouchableOpacity>
+        )
+    }
+}
 
 export default class SyndromeDefinition extends Component {
 
@@ -245,22 +261,33 @@ export default class SyndromeDefinition extends Component {
                     'indicado.'
             }
         ];
-    }
-
-    state = {
-        modalVisible: false,
-    }
-
-    toggleModal(visible) {
-        this.setState({modalVisible: visible});
-    }
-
-    openModal(searchedName) {
-        let syndron = this.items.filter(item => item.name === searchedName);
-        this.toggleModal(true)
-        console.log(syndron[0].name);
+        this.state = {
+            isModalVisible: false,
+            selectedItem: null
+        };
 
     }
+
+    _onPressItem = (item) => {
+        this._showModal(item);
+    };
+
+    _hideMyModal = () => {
+        this.setState({isModalVisible: false})
+    }
+
+    _showModal = (item) => this.setState({ isModalVisible: true,
+        selectedItem: item })
+
+    _keyExtractor = (item) => item.name;
+
+    _renderItem = ({item}) => (
+        <MyItem
+            style={styles.cardContent}
+            item={item}
+            onPressItem={() => this._onPressItem(item)}
+        />
+    );
 
     render() {
 
@@ -268,32 +295,18 @@ export default class SyndromeDefinition extends Component {
             <View style={styles.safeView}>
                 <View style={styles.containerContent}>
                     <ScrollView>
-                        <View>
-                            {this.items.map((item) => {
-                                return (
-                                    <TouchableOpacity
-                                        style={styles.cardContent}
-                                        onPress={() => {this.openModal(item.name)}}>
-                                        <Text style={styles.syndroTitle}>{item.name}</Text>
-                                        <Modal animationType={"slide"} transparent={false}
-                                               visible={this.state.modalVisible}>
-                                            <ScrollView>
-                                                <View style={styles.modal}>
-                                                    <Text style={styles.syndroTitle}>{item.name}</Text>
-                                                    <Text style={styles.syndroDescription}>{item.description}</Text>
+                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                            <ScrollView style={styles.container}>
+                                <FlatList
+                                    data={this.items}
+                                    ItemSeparatorComponent = {this._flatListItemSeparator}
+                                    renderItem={this._renderItem}
+                                    keyExtractor={this._keyExtractor}
+                                />
+                            </ScrollView>
+                            { this.state.isModalVisible && <ModalForList selectedItem={this.state.selectedItem} modalVisible={this.state.isModalVisible} hideModal={this._hideMyModal} /> }
+                        </KeyboardAvoidingView>
 
-                                                    <TouchableHighlight onPress={() => {
-                                                        this.toggleModal(!this.state.modalVisible)
-                                                    }}>
-                                                        <Text style={styles.text}>Voltar</Text>
-                                                    </TouchableHighlight>
-                                                </View>
-                                            </ScrollView>
-                                        </Modal>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
                     </ScrollView>
                 </View>
             </View>
@@ -316,43 +329,20 @@ const styles = StyleSheet.create({
 
     cardContent: {
         margin: 8,
-        paddingLeft: 20,
-        paddingRight: 20,
+        padding: 20,
         textAlign: 'justify',
         backgroundColor: blackSemiTransparent,
         borderRadius: 10,
     },
 
-    text: {
-        marginTop: 10,
-        fontSize: 25,
-        paddingTop: 10,
-        paddingBottom: 10,
-    },
-
     syndroTitle: {
-        fontSize: 25,
+        fontSize: 22,
         marginTop: 5,
         paddingTop: 10,
         paddingBottom: 10,
         color: textCard,
         fontWeight: 'bold',
 
-    },
-    syndroDescription: {
-        fontSize: 21,
-        fontWeight: 'bold',
-        color: textCard,
-
-    },
-    modal: {
-        flex: 1,
-        margin: 8,
-        paddingLeft: 20,
-        paddingRight: 20,
-        textAlign: 'justify',
-        backgroundColor: blackSemiTransparent,
-        borderRadius: 10,
     },
 
 });

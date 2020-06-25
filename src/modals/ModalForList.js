@@ -9,39 +9,45 @@ export default class ModalForList extends Component {
         headerShown: false
     }
 
-    constructor(props, item) {
+    constructor(props) {
         super(props)
-        this.item = item;
+        this.state = {
+            isModalVisible: props.modalVisible
+        };
+
     }
 
-    state = {
-        modalVisible: false,
-    }
-
-    toggleModal(visible) {
+    _setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
 
     render() {
         return (
+
             <TouchableOpacity
                 style={styles.cardContent}
                 onPress={() => {
                     this.toggleModal(true)
                 }}>
-                <Text style={styles.syndroTitle}>{this.item.name}</Text>
-                <Modal animationType={"slide"} transparent={false}
-                       visible={this.state.modalVisible}>
+                <View>
+                    <Text style={styles.closeButton}>X</Text>
+                </View>
+                <Text style={styles.syndroTitle}>{this.props.selectedItem.name}</Text>
+                <Modal animationType="slide"
+                       transparent={false}
+                       visible={this.state.isModalVisible}
+                       onRequestClose={() => { this.props.hideModal() }}>
                     <ScrollView>
                         <View style={styles.modal}>
-                            <Text style={styles.syndroTitle}>{this.item.name}</Text>
-                            <Text style={styles.syndroDescription}>{this.item.description}</Text>
+                            <Text style={styles.syndroTitle}>{this.props.selectedItem.name}</Text>
+                            <Text style={styles.syndroDescription}>{this.props.selectedItem.description}</Text>
 
-                            <TouchableHighlight onPress={() => {
-                                this.toggleModal(!this.state.modalVisible)
-                            }}>
+                            <TouchableHighlight
+                                style={styles.buttonContainer}
+                                onPress={() => { this.props.hideModal() }}>
                                 <Text style={styles.text}>Voltar</Text>
                             </TouchableHighlight>
+
                         </View>
                     </ScrollView>
                 </Modal>
@@ -60,6 +66,10 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
 
+    closeButton: {
+        textAlign: 'right',
+    },
+
     syndroTitle: {
         fontSize: 25,
         marginTop: 5,
@@ -67,13 +77,12 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         color: textCard,
         fontWeight: 'bold',
-
     },
     syndroDescription: {
         fontSize: 21,
         fontWeight: 'bold',
         color: textCard,
-
+        textAlign: 'justify'
     },
     modal: {
         flex: 1,
@@ -86,5 +95,3 @@ const styles = StyleSheet.create({
     },
 
 });
-
-module.exports = ModalForList
