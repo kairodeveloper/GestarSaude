@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {View, Text, StyleSheet, ScrollView, TouchableHighlight, Modal, TouchableOpacity} from 'react-native';
-import {black, colorButtons, textCard} from "../../colors";
+import {colorButtons, fontColor, textCard} from "../../colors";
 
 export default class ModalForList extends Component {
 
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     syndroDescription: {
         fontSize: 21,
         fontWeight: 'bold',
-        color: black,
+        color: fontColor,
         textAlign: 'justify'
     },
     modal: {
