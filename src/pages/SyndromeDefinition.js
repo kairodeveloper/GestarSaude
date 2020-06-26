@@ -10,7 +10,7 @@ import {
     KeyboardAvoidingView,
 } from 'react-native'
 import {
-    blackSemiTransparent, colorPrimary, textCard, white, colorFundo
+    colorPrimary, colorFundo, black, colorButtons
 } from '../../colors';
 import ModalForList from "../modals/ModalForList";
 
@@ -82,16 +82,19 @@ export default class SyndromeDefinition extends Component {
             {
                 name: 'Pré-eclâmpsia sobreposta à hipertensão arterial crônica',
                 description: 'esse diagnóstico deve ser ' +
-                    'estabelecido em algumas situações específicas: 1) quando, após 20 semanas de gestação, ' +
+                    'estabelecido em algumas situações específicas:\n\n' +
+                    '1) quando, após 20 semanas de gestação, ' +
                     'ocorre o aparecimento ou piora da proteinúria já detectada na primeira metade da ' +
-                    'gravidez (sugere-se atenção se o aumento for superior a três vezes o valor inicial); 2) ' +
+                    'gravidez (sugere-se atenção se o aumento for superior a três vezes o valor inicial); \n\n' +
+                    '2) ' +
                     'quando gestantes portadoras de hipertensão arterial crônica necessitam de associação de ' +
-                    'anti-hipertensivos ou incremento das doses terapêuticas iniciais; 3) na ocorrência de ' +
+                    'anti-hipertensivos ou incremento das doses terapêuticas iniciais; \n\n' +
+                    '3) na ocorrência de ' +
                     'disfunção de órgãos-alvo. ' +
-                    'A PE pode ser classificada ainda em:\n ' +
-                    '1. PE de início precoce (com entrega < 34 semanas de gestação);\n' +
-                    '2. PE prematuro (com parto < 37 semanas de gestação);\n' +
-                    '3. PE de início tardio (com entrega em ≥34 semanas de gestação);\n' +
+                    'A PE pode ser classificada ainda em:\n\n ' +
+                    '1. PE de início precoce (com entrega < 34 semanas de gestação);\n\n' +
+                    '2. PE prematuro (com parto < 37 semanas de gestação);\n\n' +
+                    '3. PE de início tardio (com entrega em ≥34 semanas de gestação);\n\n' +
                     '4. PE a termo (com parto em ≥ 37 semanas de gestação).'
             },
 
@@ -642,7 +645,7 @@ const styles = StyleSheet.create({
         marginEnd: 16,
         padding: 20,
         textAlign: 'justify',
-        backgroundColor: white,
+        backgroundColor: colorButtons,
         borderRadius: 10,
         elevation: 2,
         shadowOpacity: 10
@@ -653,7 +656,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         paddingTop: 10,
         paddingBottom: 10,
-        color: textCard,
+        color: black,
         fontWeight: 'bold',
 
     },

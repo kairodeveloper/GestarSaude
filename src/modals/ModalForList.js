@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {View, Text, StyleSheet, ScrollView, TouchableHighlight, Modal, TouchableOpacity} from 'react-native';
-import {blackSemiTransparent, textCard} from "../../colors";
+import {black, colorButtons, textCard} from "../../colors";
 
 export default class ModalForList extends Component {
 
@@ -74,14 +74,14 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop: 5,
         paddingTop: 10,
-        paddingBottom: 10,
+        paddingBottom: 20,
         color: textCard,
         fontWeight: 'bold',
     },
     syndroDescription: {
         fontSize: 21,
         fontWeight: 'bold',
-        color: textCard,
+        color: black,
         textAlign: 'justify'
     },
     modal: {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         textAlign: 'justify',
-        backgroundColor: blackSemiTransparent,
+        backgroundColor: colorButtons,
         borderRadius: 10,
     },
 
