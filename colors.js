@@ -2,6 +2,8 @@
 export const black = "#000"
 export const white = "#FFF"
 export const red = "#993300"
+export const blue = "#006bb3"
+export const pink = "#ff99ff"
 
 // PERSONAL COLORS
 export const colorFundo = "#F2F2F2"

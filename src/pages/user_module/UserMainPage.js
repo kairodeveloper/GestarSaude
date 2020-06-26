@@ -37,7 +37,7 @@ import {
 } from '../../../strings';
 import { Container, Header, Content, Tab, Tabs } from 'native-base'
 import { maskForDate } from '../../global_components/GlobalFunctions';
-import { findAllNotRemoved, updateThis, getNextMid, saveThis } from '../../../realm_services/RealmService';
+import { findAllNotRemoved, updateThis, getNextMid, saveThis, findFirstByFilter } from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
 
@@ -52,6 +52,7 @@ export default class UserMainPage extends Component {
     let exames = []
     let examesBD = findAllNotRemoved('Exame')
     let consultas = findAllNotRemoved('Consulta')
+    let gravidez = findFirstByFilter('Gravidez', 'removido = false')
 
     examesBD.map((it) => {
       exames.push({
@@ -73,7 +74,8 @@ export default class UserMainPage extends Component {
       showTrimestre3: false,
       rotationT3: '0deg',
       showModalExame: false,
-      trimestreSelecionado: 1
+      trimestreSelecionado: 1,
+      gravidez: gravidez
     }
   }
 
@@ -308,7 +310,7 @@ export default class UserMainPage extends Component {
         {modal}
         <View style={styles.container}>
           <View style={{ height: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
-            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na 4ª semana da sua gravidez</Text>
+            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.state.gravidez.semana}ª semana da sua gravidez</Text>
           </View>
           <Container>
             <Tabs

@@ -45,7 +45,12 @@ export default class RegistroFirstStep extends Component {
     super(props)
 
     this.state = {
-      fullname: ""
+      nome: "",
+      idade: "",
+      cep: "",
+      bairro: "",
+      logradouro: "",
+      num_casa: ""
     }
   }
 
@@ -65,7 +70,8 @@ export default class RegistroFirstStep extends Component {
                 baseColor={black}
                 style={styles.text}
                 placeholder={nomeCompletoPlaceholder}
-                onChangeText={(password) => this.setState({ password })}
+                value={this.state.nome}
+                onChangeText={(nome) => this.setState({ nome })}
               />
             </View>
 
@@ -78,7 +84,8 @@ export default class RegistroFirstStep extends Component {
                 style={styles.text}
                 placeholder={idadePlaceholder}
                 keyboardType={'numeric'}
-                onChangeText={(password) => this.setState({ password })}
+                value={this.state.idade}
+                onChangeText={(idade) => this.setState({ idade })}
               />
             </View>
             <Text style={styles.textOverField}>{cepLabel}</Text>
@@ -90,7 +97,8 @@ export default class RegistroFirstStep extends Component {
                 style={styles.text}
                 keyboardType={'numeric'}
                 placeholder={cepPlaceholder}
-                onChangeText={(password) => this.setState({ password })}
+                value={this.state.cep}
+                onChangeText={(cep) => this.setState({ cep })}
               />
             </View>
             <Text style={styles.textOverField}>{bairroLabel}</Text>
@@ -101,7 +109,8 @@ export default class RegistroFirstStep extends Component {
                 baseColor={black}
                 style={styles.text}
                 placeholder={bairroPlaceholder}
-                onChangeText={(password) => this.setState({ password })}
+                value={this.state.bairro}
+                onChangeText={(bairro) => this.setState({ bairro })}
               />
             </View>
             <View style={{ minHeight: 30, flexDirection: 'row' }}>
@@ -114,7 +123,8 @@ export default class RegistroFirstStep extends Component {
                     baseColor={black}
                     style={styles.text}
                     placeholder={logradouroPlaceholder}
-                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.logradouro}
+                    onChangeText={(logradouro) => this.setState({ logradouro })}
                   />
                 </View>
               </View>
@@ -128,14 +138,23 @@ export default class RegistroFirstStep extends Component {
                     style={styles.text}
                     keyboardType={'numeric'}
                     placeholder={numCasaPlaceholder}
-                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.num_casa}
+                    onChangeText={(num_casa) => this.setState({ num_casa })}
                   />
                 </View>
               </View>
             </View>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('RegistroSecondStep')
+                let user = {}
+                user.nome = this.state.nome
+                user.idade = this.state.idade
+                user.cep = this.state.cep
+                user.bairro = this.state.bairro
+                user.logradouro = this.state.logradouro
+                user.num_casa = this.state.num_casa
+
+                this.props.navigation.navigate('RegistroSecondStep', {user: user})
               }}
               style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 24 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>{avancarButtonLabel}</Text>

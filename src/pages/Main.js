@@ -18,7 +18,7 @@ import {
 } from 'react-native'
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey } from '../../colors';
 import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE } from '../../images'
-import { removeAll } from '../../realm_services/RealmService';
+import { removeAll, isEmpty } from '../../realm_services/RealmService';
 import { saveExames } from '../global_components/GlobalFunctions';
 
 export default class Main extends Component {
@@ -45,7 +45,11 @@ export default class Main extends Component {
                 <View style={styles.containerButtons}>
                   <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
                                     onPress={() => {
-                                      this.props.navigation.navigate('RegisterFirstStep')
+                                      if (isEmpty('Usuario')) {
+                                        this.props.navigation.navigate('RegisterFirstStep')
+                                      } else {
+                                        this.props.navigation.navigate('UserMainPage')
+                                      }
                                     }}>
                     <Text style={styles.textButton}>SOU GESTANTE</Text>
                   </TouchableOpacity>

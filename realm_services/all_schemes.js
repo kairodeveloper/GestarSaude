@@ -23,7 +23,7 @@ export const RealmSchema = [
             semana: { type: 'int', default: 0 },
             peso: { type: 'double', default: 0 },
             nome_bebe: { type: 'string', default: '' },
-            sexo_bebe: { type: 'bool', default: 0},
+            sexo_bebe: { type: 'bool', default: false},
             createdAt: { type: 'date', default: Date() },
             removido: { type: 'bool', default: false }
         }
