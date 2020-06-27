@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import {
     black,
-    blackSemiTransparent, colorFundo, colorFundoSemiTransparente, colorPrimary, white,
+    blackSemiTransparent, colorPrimary, white,
 } from '../../colors';
 import {NEXT, PREVIOUS, ICONCALENDAR} from "../../images";
 
@@ -50,7 +50,7 @@ export default class ConsultationSchedules extends Component {
                 <View style={styles.listConsultations}>
                     {items.map((item) => {
                         return (
-                            <TouchableOpacity style={[styles.consultationCard, {marginBottom: 6}]}
+                            <TouchableOpacity style={styles.consultationCard}
                                               onPress={() => this.props.navigation.navigate('ConsultationSchedules')}>
                                 <View>
                                     <View style={styles.calendarViewAlign}>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         backgroundColor: white,
         borderRadius: 25,
         padding: 17,
-        marginBottom: 100,
+        marginBottom: 30,
     },
 
     calendarStyle: {
