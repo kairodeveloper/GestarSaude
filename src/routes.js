@@ -10,6 +10,7 @@ import SyndromeDefinition from "./pages/SyndromeDefinition";
 import ConsultationSchedules from "./pages/ConsultationSchedules";
 import Contact from "./pages/Contact";
 import RegistroConsulta from './pages/register_data/RegistroConsulta';
+import RedeAtendimentoPage from './pages/user_module/RedeAtendimentoPage';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -64,11 +65,16 @@ const RootStack = createStackNavigator({
     },
     SyndromeDefinition: {
         screen: SyndromeDefinition,
+        navigationOptions: navigationOptions
     },
     ConsultationSchedules: {
         screen: ConsultationSchedules,
+        navigationOptions: navigationOptions
+    },
+    RedeAtendimentoPage: {
+        screen: RedeAtendimentoPage,
+        navigationOptions: navigationOptions
     }
-
 },{
     initialRouteName: 'Main'
 });

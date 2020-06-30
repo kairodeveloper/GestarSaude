@@ -466,12 +466,20 @@ export default class UserMainPage extends Component {
 
                 <View style={styles.containerTabs}>
                   <ScrollView>
-                    <View style={styles.buttonStyle}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate('ConsultationSchedules')
+                      }}
+                     style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Consultas Pré-natal</Text>
-                    </View>
-                    <View style={styles.buttonStyle}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate('RedeAtendimentoPage')
+                      }}
+                     style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Rede de atendimento de alto risco a gestante no Piauí</Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.buttonStyle}>
                       <Text style={styles.textButton}>UBSses mais próximas de você</Text>
                     </View>

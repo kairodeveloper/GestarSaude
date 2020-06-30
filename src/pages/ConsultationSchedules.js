@@ -4,11 +4,13 @@ import {
     View,
     Text,
     Platform,
-    TouchableOpacity,
+    TouchableOpacity, Image,
 } from 'react-native'
 import {
-    blackSemiTransparent, colorPrimary,
+    black,
+    blackSemiTransparent, colorPrimary, white, colorFundo,
 } from '../../colors';
+import {NEXT, PREVIOUS, ICONCALENDAR} from "../../images";
 
 
 export default class ConsultationSchedules extends Component {
@@ -37,20 +39,33 @@ export default class ConsultationSchedules extends Component {
 
         return (
             <View style={styles.safeView}>
-                <View style={styles.dataStyle}>
-                    <Text style={styles.monthStyle}>AGOSTO</Text>
-                    <Text style={styles.yearStyle}>2019</Text>
-                </View>
-                <View style={styles.containerContent}>
-                    <View style={styles.containerButtons}>
-                        {items.map((item) => {
-                            return (<TouchableOpacity style={[styles.button, {marginBottom: 6}]}
-                                          onPress={() => this.props.navigation.navigate('ConsultationSchedules')}>
-                                <Text style={styles.textName}>{item.name}</Text>
-                                <Text style={styles.textPhone}>{item.phone}</Text>
-                            </TouchableOpacity>)
-                        })}
+                <View style={styles.containerData}>
+                    <Image source={PREVIOUS} style={styles.arrowsStyle}/>
+                    <View style={styles.dataStyle}>
+                        <Text style={styles.monthStyle}>AGOSTO</Text>
+                        <Text style={styles.yearStyle}>2019</Text>
                     </View>
+                    <Image source={NEXT} style={styles.arrowsStyle}/>
+                </View>
+                <View style={styles.listConsultations}>
+                    {items.map((item) => {
+                        return (
+                            <TouchableOpacity style={styles.consultationCard}
+                                              onPress={() => this.props.navigation.navigate('ConsultationSchedules')}>
+                                <View>
+                                    <View style={styles.calendarViewAlign}>
+                                        <Image source={ICONCALENDAR} style={styles.calendarStyle}/>
+                                    </View>
+                                    <View>
+                                        <Text style={[styles.textBase, styles.textData]}>{item.data}</Text>
+                                        <Text style={[styles.textBase, styles.textConsultation]}>{item.name}</Text>
+                                        <Text style={[styles.textBase, styles.textTime]}>{item.time}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                        )
+                    })}
                 </View>
             </View>
         )
@@ -62,13 +77,22 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'ios' ? 44 : 0,
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#fff",
+        backgroundColor: colorFundo,
+    },
+
+    containerData: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        paddingTop: 20,
     },
 
     dataStyle: {
         alignItems: 'center',
         flexDirection: 'column',
-        paddingTop: 20
+        marginLeft: 40,
+        marginRight: 40
     },
 
     monthStyle: {
@@ -81,46 +105,56 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
 
-    containerContent: {
-        flex: 1,
-        alignItems: 'center'
+    arrowsStyle: {
+        height: 25,
+        width: 25,
+        paddingLeft: 20,
     },
 
-    containerButtons: {
+    listConsultations: {
         flex: 1,
         width: '100%',
         marginTop: 20,
         marginLeft: 29,
+
     },
-    button: {
-        height: 60,
-        borderWidth: 3,
+    consultationCard: {
+        borderWidth: 0.8,
         borderColor: blackSemiTransparent,
         width: '90%',
-        backgroundColor: '#e5e5e5',
-        borderRadius: 12,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingLeft: 16,
-        paddingRight: 16
+        backgroundColor: white,
+        borderRadius: 25,
+        padding: 17,
+        marginBottom: 30,
     },
-    textInfo: {
-        fontSize: 24,
-        marginTop: 5,
-        paddingTop: 10,
-        paddingLeft: 20,
+
+    calendarStyle: {
+        height: 35,
+        width: 35,
     },
-    textName: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#5b5959',
-        textAlign: 'left'
+
+    calendarViewAlign: {
+        position: 'absolute',
+        right: 5,
+        top: 5,
     },
-    textPhone: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#5b5959',
-        textAlign: 'right'
-    }
+
+    textBase: {
+        color: black,
+    },
+
+    textConsultation: {
+        fontSize: 30,
+        paddingTop: 4,
+        paddingBottom: 4,
+    },
+
+    textData: {
+        fontSize: 18,
+    },
+
+    textTime: {
+        fontSize: 18,
+    },
+
 });
