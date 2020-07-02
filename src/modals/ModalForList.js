@@ -1,7 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
-import {View, Text, StyleSheet, ScrollView, TouchableHighlight, Modal, TouchableOpacity} from 'react-native';
-import {blackSemiTransparent, textCard} from "../../colors";
+import { View, Text, StyleSheet, Image, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { blackSemiTransparent, textCard, white, fontColor } from "../../colors";
+import { ICONCOCAIS, ICONCLOSE } from '../../images';
+import { getIconRegiaoById } from '../global_components/GlobalFunctions';
 
 export default class ModalForList extends Component {
 
@@ -14,44 +16,49 @@ export default class ModalForList extends Component {
         this.state = {
             isModalVisible: props.modalVisible
         };
-
     }
 
-    _setModalVisible(visible) {
-        this.setState({modalVisible: visible});
+    formatText(stringModal) {
+        if (stringModal.length > 12) {
+            return stringModal.substring(0, 11) + "..."
+        }
+
+        return stringModal
     }
 
     render() {
         return (
 
-            <TouchableOpacity
-                style={styles.cardContent}
-                onPress={() => {
-                    this.toggleModal(true)
-                }}>
-                <View>
-                    <Text style={styles.closeButton}>X</Text>
+            <View style={styles.cardContent}>
+                <View style={styles.viewTitleModal}>
+                    <View style={styles.viewTitleImageModal}>
+                        <Image source={getIconRegiaoById(this.props.regiao.id)} style={styles.imageModal} />
+                    </View>
+                    <View style={styles.viewTextImageModal}>
+                        <Text style={styles.titleModal}>{this.formatText(this.props.regiao.name)}</Text>
+                        <Text style={styles.subtitleModal}>Sede: {this.props.regiao.sede}</Text>
+                    </View>
+                    <View style={styles.viewImageCloseModal}>
+                        <TouchableOpacity onPress={() => this.props.closeModal()}>
+                            <Image source={ICONCLOSE} style={{ height: 25, width: 25 }} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <Text style={styles.syndroTitle}>{this.props.selectedItem.name}</Text>
-                <Modal animationType="slide"
-                       transparent={false}
-                       visible={this.state.isModalVisible}
-                       onRequestClose={() => { this.props.hideModal() }}>
-                    <ScrollView>
-                        <View style={styles.modal}>
-                            <Text style={styles.syndroTitle}>{this.props.selectedItem.name}</Text>
-                            <Text style={styles.syndroDescription}>{this.props.selectedItem.description}</Text>
+                <View style={styles.viewContentModal}>
+                    <FlatList
+                        data={this.props.regiao.estabelecimentos}
+                        snapToAlignment={"center"}
+                        flex={1}
+                        renderItem={({ item }) =>
+                            <View style={styles.item}>
+                                <Text style={styles.titleItem}>{item.nome}</Text>
+                                <Text style={styles.subtitleItem}>{item.cidade}</Text>
+                            </View>
+                        }
+                    />
 
-                            <TouchableHighlight
-                                style={styles.buttonContainer}
-                                onPress={() => { this.props.hideModal() }}>
-                                <Text style={styles.text}>Voltar</Text>
-                            </TouchableHighlight>
-
-                        </View>
-                    </ScrollView>
-                </Modal>
-            </TouchableOpacity>
+                </View>
+            </View>
         );
     }
 }
@@ -59,39 +66,65 @@ export default class ModalForList extends Component {
 
 
 const styles = StyleSheet.create({
-    text: {
-        marginTop: 10,
-        fontSize: 25,
-        paddingTop: 10,
-        paddingBottom: 10,
+    cardContent: {
+        flex: 1
     },
-
-    closeButton: {
-        textAlign: 'right',
+    viewTitleModal: {
+        minHeight: 50,
+        flexDirection: 'row'
     },
-
-    syndroTitle: {
-        fontSize: 25,
-        marginTop: 5,
-        paddingTop: 10,
-        paddingBottom: 10,
-        color: textCard,
-        fontWeight: 'bold',
-    },
-    syndroDescription: {
-        fontSize: 21,
-        fontWeight: 'bold',
-        color: textCard,
-        textAlign: 'justify'
-    },
-    modal: {
+    viewTitleImageModal: {
         flex: 1,
-        margin: 8,
-        paddingLeft: 20,
-        paddingRight: 20,
-        textAlign: 'justify',
-        backgroundColor: blackSemiTransparent,
-        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-
+    viewImageCloseModal: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: 6
+    },
+    viewTextImageModal: {
+        flex: 3,
+        paddingStart: 16
+    },
+    imageModal: {
+        height: 50,
+        width: '100%'
+    },
+    titleModal: {
+        fontSize: 18,
+        textTransform: 'uppercase',
+        fontWeight: 'bold'
+    },
+    subtitleModal: {
+        fontSize: 16,
+        textTransform: 'capitalize'
+    },
+    viewContentModal: {
+        flex: 1,
+        marginTop: 16
+    },
+    item: { 
+        minHeight: 50, 
+        backgroundColor: white, 
+        elevation: 2, 
+        shadowOpacity: 10, 
+        borderRadius: 15, 
+        marginBottom: 16, 
+        padding: 6, 
+        paddingStart: 16, 
+        paddingEnd: 16, 
+        justifyContent: 'center'
+    },
+    titleItem: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: fontColor
+    },
+    subtitleItem: {
+        fontSize: 14,
+        color: fontColor
+    }
 });
+
+module.exports = ModalForList

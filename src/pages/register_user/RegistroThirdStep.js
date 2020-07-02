@@ -63,6 +63,7 @@ export default class RegistroThirdStep extends Component {
                                         tintColor={black}
                                         baseColor={black}
                                         style={styles.text}
+                                        keyboardType={'numeric'}
                                         placeholder={"Digite a semana da gravidez..."}
                                         value={this.state.semana}
                                         onChangeText={(semana) => this.setState({ semana })}
@@ -78,6 +79,7 @@ export default class RegistroThirdStep extends Component {
                                         tintColor={black}
                                         baseColor={black}
                                         style={styles.text}
+                                        keyboardType={'numeric'}
                                         placeholder={"Digite o seu peso..."}
                                         value={this.state.peso}
                                         onChangeText={(peso) => this.setState({ peso })}

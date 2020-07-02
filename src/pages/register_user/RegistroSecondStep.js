@@ -80,6 +80,7 @@ export default class RegistroSecondStep extends Component {
                                     tintColor={black}
                                     baseColor={black}
                                     style={styles.text}
+                                    keyboardType={'numeric'}
                                     placeholder={"000 0000 0000 0000"}
                                     value={this.state.cartao_sus}
                                     onChangeText={(cartao_sus) => this.setState({ cartao_sus })}
