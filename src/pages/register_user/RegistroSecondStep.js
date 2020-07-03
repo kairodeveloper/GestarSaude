@@ -87,7 +87,7 @@ export default class RegistroSecondStep extends Component {
                                 />
                             </View>
 
-                            <TouchableOpacity
+                            {/*<TouchableOpacity
                                 onPress={() => {
 
                                 }}
@@ -114,7 +114,7 @@ export default class RegistroSecondStep extends Component {
                                         </View>
                                     }
                                 />
-                            </View>
+                                </View>*/}
 
                             <TouchableOpacity
                                 onPress={() => {

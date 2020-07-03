@@ -191,7 +191,16 @@ function getRegiaoData(value) {
             id: 5,
             name: "Vale do Sambito",
             sede: "Valença",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Hospital Reg Eustaquio Portela", cidade: "Valença"},
+                {nome: "UMS de Aroazes", cidade: "Aroazes"},
+                {nome: "UMS Pedro Lopes", cidade: "Francinópolis"},
+                {nome: "UMS Inhazinha Nunes", cidade: "Inhuma"},
+                {nome: "UMS Mônica R Dantas", cidade: "Pimenteira"},
+                {nome: "UMS Dr Elon C De Aguiar", cidade: "Prata"},
+                {nome: "UMS Antonio Batista", cidade: "São Felix"},
+                {nome: "Unidade Mista Cicero R Almeida", cidade: "Várzea Grande"},
+            ]
         },{
             id: 6,
             name: "Tabuleiros do Alto Parnaíba",
@@ -206,27 +215,63 @@ function getRegiaoData(value) {
             id: 7,
             name: "Chapada das Mangabeiras",
             sede: "Bom Jesus",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Hospital Regional Dr. João Pacheco Cavalcante", cidade: "Corrente"},
+                {nome: "UMS Redenção Do Gurguéia", cidade: "Redenção do Gurguéia"},
+                {nome: "UMS Anfrisio Neto Lobão Castelo Branco", cidade: "Monte Alegre"},
+                {nome: "Hospital Local Julio B De Macedo", cidade: "Curimatá"},
+            ]
         },{
             id: 8,
             name: "Tabuleiros dos Rios Piauí e Itaueiras",
             sede: "Floriano",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Hospital Regional Tibério Nunes", cidade: "Floriano"},
+                {nome: "UMS De Paes Landim", cidade: "Paes Landim"},
+                {nome: "Unidade Mista De Arraial", cidade: "Arraial"},
+                {nome: "Hospital Estadual De Canto Do Buriti", cidade: "Canto do Buriti"},
+                {nome: "Hospital Municipal Daniel Carlos De Andrade", cidade: "Itaueira"},
+                {nome: "UMS De Rio Grande Do Piaui", cidade: "Rio Grande do Piauí"},
+                {nome: "Hospital Municipal Sagrado Coração De Jesus", cidade: "Landri Sales"},
+            ]
         },{
             id: 9,
             name: "Vale do Canindé",
             sede: "Oeiras",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Hospital Estadual Jose de Moura Fé", cidade: "Simplício Mendes"},
+                {nome: "Hopital Regional Deolindo Couto", cidade: "Oeiras"},
+            ]
         },{
             id: 10,
             name: "Serra da Capivara",
             sede: "São Raimundo Nonato",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Maternidade Municipal Mãe Elisa", cidade: "São Raimundo Nonato"},
+                {nome: "CLISA", cidade: "São Raimundo Nonato"},
+                {nome: "Hospital Senador Cândido Ferraz", cidade: "São Raimundo Nonato"},
+
+            ]
         },{
             id: 11,
             name: "Vale do Guaribas",
             sede: "Picos",
-            estabelecimentos: []
+            estabelecimentos: [
+                {nome: "Hospital Geral De Picos", cidade: "Picos"},
+                {nome: "Hospital Regional Justino Luz", cidade: "Picos"},
+                {nome: "Clínica De Urgência De Picos", cidade: "Picos"},
+                {nome: "Casa De Saúde e Maternidade Nossa Senhora Dos Remédios", cidade: "Picos"},
+                {nome: "HGPAJO Hospital", cidade: "Picos"},
+                {nome: "Hospital Local Dona Lourdes Mota", cidade: "Picos"},
+                {nome: "Hospital Memorial Do Carmo", cidade: "Picos"},
+                {nome: "Unidade Mista De Saude Luiz Josino De Barros", cidade: "Bocaina"},
+                {nome: "UMS de Ipiranga", cidade: "Ipiranga"},
+                {nome: "Unidade Mista de Itainópolis", cidade: "Itainópolis"},
+                {nome: "UMS de Padre Marcos", cidade: "Padre Marcos"},
+                {nome: "Hospital Regional Mariana Pires Ferreira", cidade: "Paulistana"},
+                {nome: "Hospital Estadual Maternidade Petronila Cavalcanti", cidade: "Paulistana"},
+                {nome: "Hospital Municipal Zuca Batista", cidade: "Simões"},
+            ]
         }
     ]
 
