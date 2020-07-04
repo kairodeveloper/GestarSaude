@@ -17,6 +17,8 @@ export const NEXT = require('./files/icons/icon_next.png')
 export const PREVIOUS = require('./files/icons/icon_previous.png')
 export const ICONCLOSE = require('./files/icons/icon_close_grey.png')
 export const ICONTARGET = require('./files/icons/icon_target.png')
+export const ICONCAMERA = require('./files/icons/icon_camera.png')
+export const ICONTRASH = require('./files/icons/ic_lixo.png')
 
 /* REGIOES IMAGES */
 export const ICONALTOPARNAIBA = require('./files/icons/regioes/alto_parnaiba.png')

@@ -53,6 +53,7 @@ export const RealmSchema = [
             pressao_x: { type: 'int', default: 0 },
             pressao_y: { type: 'int', default: 0 },
             observacao: { type: 'string', default: "" },
+            anexos: { type: 'string[]' },
             createdAt: { type: 'date', default: Date() },
             removido: { type: 'bool', default: false }
         }

@@ -466,13 +466,14 @@ export default class UserMainPage extends Component {
 
                 <View style={styles.containerTabs}>
                   <ScrollView>
-                    <TouchableOpacity
+                    {/*<TouchableOpacity
                       onPress={() => {
                         this.props.navigation.navigate('ConsultationSchedules')
                       }}
                      style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Consultas Pré-natal</Text>
                     </TouchableOpacity>
+                    */}
                     <TouchableOpacity
                       onPress={() => {
                         this.props.navigation.navigate('RedeAtendimentoPage')

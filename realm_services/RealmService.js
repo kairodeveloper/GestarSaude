@@ -1,7 +1,7 @@
 import Realm from 'realm'
 import { RealmSchema } from './all_schemes';
 
-let SCHEMA_VERSION = 9
+let SCHEMA_VERSION = 10
 
 function findFirstUsuario() {
     let realm = new Realm({

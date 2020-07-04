@@ -14,10 +14,11 @@ import {
     TouchableOpacity,
     ImageBackground,
     Platform,
-    StatusBar
+    StatusBar,
+    FlatList
 } from 'react-native'
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey, fontColor } from '../../../colors';
-import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE } from '../../../images'
+import { ICONTRASH, ICONCAMERA } from '../../../images'
 import {
     cepPlaceholder,
     saudacaoStep1,
@@ -36,6 +37,7 @@ import {
 } from '../../../strings';
 import DatePicker from 'react-native-datepicker'
 import { getNextMid, saveThis, findFirstByFilter, updateThis } from '../../../realm_services/RealmService';
+import ImagePicker from 'react-native-image-picker';
 
 export default class RegistroConsulta extends Component {
 
@@ -59,6 +61,7 @@ export default class RegistroConsulta extends Component {
         let pressao_x = 0
         let pressao_y = 0
         let observacao = ""
+        let anexos = []
 
         if (midConsulta != 0) {
             consulta = findFirstByFilter('Consulta', 'mid = ' + midConsulta)
@@ -70,6 +73,10 @@ export default class RegistroConsulta extends Component {
             pressao_x = consulta.pressao_x.toString()
             pressao_y = consulta.pressao_y.toString()
             observacao = consulta.observacao
+
+            consulta.anexos.map((it) => {
+                anexos.push(JSON.parse(it))
+            })
 
             edit = true
         }
@@ -84,9 +91,44 @@ export default class RegistroConsulta extends Component {
             pressao_x: pressao_x,
             pressao_y: pressao_y,
             observacao: observacao,
+            filesPath: anexos,
             edit: edit
         }
     }
+
+    chooseFile = () => {
+        var options = {
+          title: 'Selecione a imagem',
+          customButtons: [
+          //  { name: 'customOptionKey', title: 'Escolha uma foto da galeria' },
+          ],
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.showImagePicker(options, response => {
+          console.log('Response = ', response);
+    
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+          } else {
+            let source = response;
+            let files = this.state.filesPath
+
+            files.push(source)
+
+            this.setState({
+              filesPath: files
+            });
+          }
+        });
+      };
 
     getEstadoSaude(params1, params2) {
         let pressao_x = params1
@@ -133,8 +175,19 @@ export default class RegistroConsulta extends Component {
         consulta.pressao_y = y
         consulta.observacao = this.state.observacao
 
+        let files = this.state.filesPath
+        let filesSave = []
+
+        files.map((it) => {
+            filesSave.push(
+                JSON.stringify(it)
+            )
+        })
+
+        consulta.anexos = filesSave
+
         if (this.state.edit) {
-            let fields = ['data', 'numero', 'nome_medico', 'peso', 'pressao_x', 'pressao_y', 'observacao']
+            let fields = ['data', 'numero', 'nome_medico', 'anexos', 'peso', 'pressao_x', 'pressao_y', 'observacao']
 
             consulta.mid = this.state.consulta.mid
             updateThis('Consulta', consulta, fields)
@@ -262,6 +315,29 @@ export default class RegistroConsulta extends Component {
                                     onChangeText={(observacao) => this.setState({ observacao })}
                                 />
                             </View>
+                            
+                            <Text style={styles.textOverField}>Anexo(s)</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <TouchableOpacity onPress={() => {
+                                    this.chooseFile()
+                                }} style={[styles.containerTextInput, { justifyContent: 'center', alignItems: 'center', paddingStart: 0, height: 60, width: 60}]}>
+                                    <Image source={ICONCAMERA} style={{height: 30, width: 30}} />
+                                </TouchableOpacity>
+                                <FlatList
+                                    data={this.state.filesPath}
+                                    snapToAlignment={"center"}
+                                    flex={1}
+                                    horizontal={true}
+                                    renderItem={({ item }) =>
+                                        <View style={styles.item}>
+                                            <Image source={{uri: item.uri}} style={{borderRadius: 15, height: 50, width: 50}} />
+                                        </View>
+                                    }
+                                />
+                                
+                                {/*this.state.filePath.uri*/}
+                            
+                            </View>
                             <TouchableOpacity
                                 onPress={() => {
                                     this.saveAndCloseWindow()
@@ -313,4 +389,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: fontColor
     },
+    item: {
+        marginTop: 5,
+        borderRadius: 15,
+        marginStart: 16,
+        height: 50,
+        width: 50,
+        borderWidth: 1
+    }
 });

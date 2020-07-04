@@ -8,28 +8,12 @@ import {
     ScrollView,
     FlatList,
     KeyboardAvoidingView,
+    Modal,
 } from 'react-native'
 import {
-    blackSemiTransparent, colorPrimary, textCard, white, colorFundo
+    blackSemiTransparent, colorPrimary, textCard, white, colorFundo, fontColor
 } from '../../colors';
-import ModalForList from "../modals/ModalForList";
-
-
-class MyItem extends React.Component {
-    _onPress = () => {
-        this.props.onPressItem(this.props.item);
-    };
-    render() {
-        return(
-            <TouchableOpacity
-                {...this.props}
-                onPress={this._onPress}
-            >
-                <Text style={styles.syndroTitle}> {this.props.item.name}</Text>
-            </TouchableOpacity>
-        )
-    }
-}
+import ModalSindromeDefinition from "../modals/ModalSindromeDefinition";
 
 export default class SyndromeDefinition extends Component {
 
@@ -50,6 +34,7 @@ export default class SyndromeDefinition extends Component {
         this.items = [
             {
                 name: 'Hipertensão Gestacional (HG)',
+                quadro: 1,
                 description: 'refere-se à identificação de hipertensão arterial, em ' +
                     'gestante previamente normotensa, porém sem proteinúria ou manifestação de outros sinais/sintomas' +
                     ' relacionados a pré-eclâmpsia. Essa forma de hipertensão deve desaparecer até 12 semanas após o ' +
@@ -62,11 +47,14 @@ export default class SyndromeDefinition extends Component {
                     'diagnóstico.'
             },
             {
-                name: 'Hipertensão Arterial Crônica (HAC)', description: 'presença de hipertensão reportada pela ' +
+                name: 'Hipertensão Arterial Crônica (HAC)', 
+                quadro: 1,
+                description: 'Presença de hipertensão reportada pela ' +
                     'gestante ou identificada antes de 20 semanas de gestação.'
             },
             {
                 name: 'Pré-eclâmpsia (PE)',
+                quadro: 1,
                 description: 'manifestação de hipertensão arterial identificada após a 20ª ' +
                     'semana de gestação, associada à proteinúria significativa. Ainda que essa apresentação ' +
                     'seja classicamente considerada, a presença de proteinúria não é mandatória para o ' +
@@ -81,6 +69,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'Pré-eclâmpsia sobreposta à hipertensão arterial crônica',
+                quadro: 1,
                 description: 'esse diagnóstico deve ser ' +
                     'estabelecido em algumas situações específicas: 1) quando, após 20 semanas de gestação, ' +
                     'ocorre o aparecimento ou piora da proteinúria já detectada na primeira metade da ' +
@@ -89,14 +78,16 @@ export default class SyndromeDefinition extends Component {
                     'anti-hipertensivos ou incremento das doses terapêuticas iniciais; 3) na ocorrência de ' +
                     'disfunção de órgãos-alvo. ' +
                     'A PE pode ser classificada ainda em:\n ' +
-                    '1. PE de início precoce (com entrega < 34 semanas de gestação);\n' +
+                    '\n1. PE de início precoce (com entrega < 34 semanas de gestação);\n' +
                     '2. PE prematuro (com parto < 37 semanas de gestação);\n' +
                     '3. PE de início tardio (com entrega em ≥34 semanas de gestação);\n' +
                     '4. PE a termo (com parto em ≥ 37 semanas de gestação).'
             },
 
             {
-                name: 'Características individuais e condições sociodemográcas desfavoráveis', description: 'Idade ' +
+                name: 'Características individuais e condições sociodemográcas desfavoráveis', 
+                quadro: 2,
+                description: 'Idade ' +
                     'maior que 35 anos; Idade menor que 15 anos ou menarca há menos de 2 anos*; Altura menor que ' +
                     '1,45m; Peso pré-gestacional menor que 45kg e maior que 75kg (IMC30);' +
                     'Anormalidades estruturais nos órgãos reprodutivos; Situação conjugal insegura;' +
@@ -107,6 +98,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'História reprodutiva anterior',
+                quadro: 2,
                 description: 'Abortamento habitual; Morte perinatal explicada e ' +
                     'inexplicada; História de recém-nascido com crescimento restrito ou malformado; Parto ' +
                     'pré-termo anterior; Esterilidade/infertilidade; Intervalo interpartal menor que dois anos ' +
@@ -115,13 +107,17 @@ export default class SyndromeDefinition extends Component {
                     'cesáreas anteriores).'
             },
             {
-                name: 'Condições clínicas preexistentes', description: 'Hipertensão arterial; Cardiopatias; ' +
+                name: 'Condições clínicas preexistentes',
+                quadro: 2,
+                description: 'Hipertensão arterial; Cardiopatias; ' +
                     'Pneumopatias; Nefropatias; Endocrinopatias (principalmente diabetes e tireoidopatias); ' +
                     'Hemopatias; Epilepsia; Doenças infecciosas (considerar a situação epidemiológica ' +
                     'local); Doenças autoimunes; Ginecopatias; Neoplasias'
             },
             {
-                name: 'Doença obstétrica na gravidez atual', description: 'Desvio quanto ao crescimento uterino, ' +
+                name: 'Doença obstétrica na gravidez atual', 
+                quadro: 2,
+                description: 'Desvio quanto ao crescimento uterino, ' +
                     'número de fetos e volume de líquido amniótico; Trabalho de parto prematuro e ' +
                     'gravidez prolongada; Ganho ponderal inadequado; Pré-eclâmpsia e eclâmpsia; ' +
                     'Diabetes gestacional; Amniorrexe prematura; Hemorragias da gestação; Insuciência ' +
@@ -129,6 +125,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'Intercorrências clínicas',
+                quadro: 2,
                 description: 'Doenças infectocontagiosas vividas durante a presente ' +
                     'gestação (ITU, doenças do trato respiratório, rubéola, toxoplasmose etc.); Doenças ' +
                     'clínicas diagnosticadas pela primeira vez nessa gestação (cardiopatias, ' +
@@ -177,7 +174,9 @@ export default class SyndromeDefinition extends Component {
             },
 
             {
-                name: 'Alterações Vasculares', description: 'Além da hipertensão, as mulheres com pré eclâmpsia ou\n' +
+                name: 'Alterações Vasculares', 
+                quadro: 3,
+                description: 'Além da hipertensão, as mulheres com pré eclâmpsia ou\n' +
                     'eclâmpsia geralmente não apresentam a hipervolemia associada à gravidez\n' +
                     'normal; assim, a hemoconcentração é um achado frequente. Além disso, a interação de\n' +
                     'vários agentes vasoativos, como prostaciclina (vasodilatador), tromboxano\n' +
@@ -187,6 +186,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'Alterações Hematológicas',
+                quadro: 3,
                 description: 'Várias alterações hematológicas também podem ocorrer em\n' +
                     'mulheres com pré-eclâmpsia, especialmente na pré-eclâmpsia com características\n' +
                     'graves. Trombocitopenia e hemólise podem ocorrer e podem atingir níveis graves como\n' +
@@ -204,6 +204,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'Alterações hepáticas',
+                quadro: 3,
                 description: 'A função hepática pode ser significativamente alterada em\n' +
                     'mulheres com pré-eclâmpsia com características graves. Alanina aminotransferase e\n' +
                     'AST podem estar elevados. O aspartato aminotransferase é a transaminase dominante\n' +
@@ -224,6 +225,7 @@ export default class SyndromeDefinition extends Component {
             },
             {
                 name: 'Alterações renais',
+                quadro: 3,
                 description: 'As alterações renais histopatológicas classicamente descritas ' +
                     'na pré-eclâmpsia como endoteliose glomerular consistem em células endoteliais inchadas e\n' +
                     'vacuolizadas com fibrilas, células mesangiais inchadas, depósitos subendoteliais de\n' +
@@ -247,7 +249,9 @@ export default class SyndromeDefinition extends Component {
                     'proximais.'
             },
             {
-                name: 'Consequências fetais', description: 'Como resultado do comprometimento do fluxo sanguíneo\n' +
+                name: 'Consequências fetais', 
+                quadro: 3,
+                description: 'Como resultado do comprometimento do fluxo sanguíneo\n' +
                     'uteroplacentário secundário à falha da transformação fisiológica das artérias espirais ou\n' +
                     'dos insultos vasculares da placenta, ou ambos, manifestações de pré-eclâmpsia também\n' +
                     'podem ser vistas na unidade feto-placentária. Anormalidades no leito placentário e\n' +
@@ -262,7 +266,9 @@ export default class SyndromeDefinition extends Component {
             },
 
             {
-                name: 'Triagem/Manejo Clínico', description: '11 a 13 semanas\n\n' +
+                name: 'Triagem/Manejo Clínico', 
+                quadro: 4,
+                description: '11 a 13 semanas\n\n' +
                     'Em um estudo do tipo secundário, derivado de três estudos prospectivos com objetivo de ' +
                     'analisar o desempenho da triagem para pré-eclâmpsia (EP) precoce, pré-termo e a termo ' +
                     'na gestação de 11 a 13 semanas por fatores maternos e combinações de pressão arterial ' +
@@ -376,6 +382,7 @@ export default class SyndromeDefinition extends Component {
 
             {
                 name: 'Fluxo de assistência a mulher grávida-FAMG',
+                quadro: 4,
                 description: 'Roteiro de consultas\n\n' +
                     '1ª Consulta: classificação de risco gestacional pelo uso do Instrumento Oficial (ficha 01).\n' +
                     'Possibilidades:\n' +
@@ -416,6 +423,7 @@ export default class SyndromeDefinition extends Component {
             {
                 name: 'Sinais e Sintomas de alerta, valores de referência da Pressão arterial e exames ' +
                     'laboratoriais',
+                quadro: 4,
                 description: 'Sinais e Sintomas de alerta\n\n' +
                     '- Síndromes hemorrágicas (incluindo descolamento prematuro de placenta, placenta prévia), ' +
                     'independentemente da dilatação cervical e da idade gestacional;\n' +
@@ -555,6 +563,7 @@ export default class SyndromeDefinition extends Component {
 
             {
                 name: 'Número de consultas de pré-natal',
+                quadro: 4,
                 description: 'Até 28ª semana – mensalmente;\n\n' +
                     'Da 28ª até a 36ª semana – quinzenalmente;\n\n' +
                     'Da 36ª até a 41ª semana – semanalmente.'
@@ -562,6 +571,7 @@ export default class SyndromeDefinition extends Component {
 
             {
                 name: 'Fluxo de atendimento à gestante de alto risco',
+                quadro: 4,
                 description: 'O estado do Piauí estabeleceu o fluxo de assistência à ' +
                     'mulher grávida, iniciado pela classificação de risco gestacional mediante ' +
                     'utilização de instrumento oficial do Estado destinado a tal finalidade, encaminhamento ' +
@@ -576,46 +586,49 @@ export default class SyndromeDefinition extends Component {
 
     }
 
-    _onPressItem = (item) => {
-        this._showModal(item);
-    };
-
-    _hideMyModal = () => {
-        this.setState({isModalVisible: false})
+    closeModal = () => {
+        this.setState({
+            isModalVisible: false
+        })
     }
 
-    _showModal = (item) => this.setState({ isModalVisible: true,
-        selectedItem: item })
+    showModal = (item) => this.setState({ 
+        isModalVisible: true,
+        selectedItem: item 
+    })
 
-    _keyExtractor = (item) => item.name;
-
-    _renderItem = ({item}) => (
-        <MyItem
-            style={styles.cardContent}
-            item={item}
-            onPressItem={() => this._onPressItem(item)}
-        />
+    renderItem = ({item}) => (
+        <TouchableOpacity onPress={() => {
+            this.showModal(item)
+        }} style={styles.item}>
+            <Text style={styles.titleItem}>{item.name}</Text>
+        </TouchableOpacity>
     );
 
     render() {
+        let modal = <Modal
+                        animationType="slide"
+                        visible={this.state.isModalVisible}
+                        transparent>
+                        <View style={styles.containerModal}>
+                            <View style={styles.viewContentModal}>
+                                <ModalSindromeDefinition
+                                    item={this.state.selectedItem}
+                                    closeModal={this.closeModal} />
+                            </View>
+                        </View>
+                    </Modal>
 
         return (
             <View style={styles.safeView}>
+                {modal}
                 <View style={styles.containerContent}>
-                    <ScrollView>
-                        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                            <ScrollView style={styles.container}>
-                                <FlatList
-                                    data={this.items}
-                                    ItemSeparatorComponent = {this._flatListItemSeparator}
-                                    renderItem={this._renderItem}
-                                    keyExtractor={this._keyExtractor}
-                                />
-                            </ScrollView>
-                            { this.state.isModalVisible && <ModalForList selectedItem={this.state.selectedItem} modalVisible={this.state.isModalVisible} hideModal={this._hideMyModal} /> }
-                        </KeyboardAvoidingView>
-
-                    </ScrollView>
+                    <FlatList
+                        data={this.items}
+                        ItemSeparatorComponent = {this.flatListItemSeparator}
+                        renderItem={this.renderItem}
+                        
+                    />
                 </View>
             </View>
         )
@@ -633,7 +646,7 @@ const styles = StyleSheet.create({
     containerContent: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 16
+        padding: 16
     },
 
     cardContent: {
@@ -646,6 +659,40 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         elevation: 2,
         shadowOpacity: 10
+    },
+
+    containerModal: {
+        flex: 1,
+        backgroundColor: blackSemiTransparent,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    item: {
+        minHeight: 50, 
+        backgroundColor: white, 
+        elevation: 2, 
+        shadowOpacity: 10, 
+        borderRadius: 15, 
+        marginBottom: 16, 
+        padding: 6, 
+        paddingStart: 16, 
+        paddingEnd: 16, 
+        justifyContent: 'center'
+    },
+
+    titleItem: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: fontColor
+    },
+
+    viewContentModal: {
+        height: '60%',
+        width: '75%',
+        backgroundColor: white,
+        borderRadius: 25,
+        padding: 16
     },
 
     syndroTitle: {
