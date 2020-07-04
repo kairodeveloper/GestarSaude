@@ -39,6 +39,8 @@ import DatePicker from 'react-native-datepicker'
 import { getNextMid, saveThis, findFirstByFilter, updateThis } from '../../../realm_services/RealmService';
 import ImagePicker from 'react-native-image-picker';
 
+import ModalImages from "../../modals/ModalImages";
+
 export default class RegistroConsulta extends Component {
 
     static navigationOptions = {
@@ -87,11 +89,13 @@ export default class RegistroConsulta extends Component {
             nome_medico: nome_medico,
             date: date,
             dateHasChange: false,
+            isModalVisible: false,
             peso: peso,
             pressao_x: pressao_x,
             pressao_y: pressao_y,
             observacao: observacao,
             filesPath: anexos,
+            selectedImage: {},
             edit: edit
         }
     }
@@ -203,11 +207,32 @@ export default class RegistroConsulta extends Component {
         this.props.navigation.goBack();  
     }
 
+    closeModal = () => {
+        this.setState({
+            isModalVisible: false
+        })
+    }
+
     render() {
+        let modal = <Modal
+                        animationType="slide"
+                        visible={this.state.isModalVisible}
+                        transparent>
+                        <View style={styles.containerModal}>
+                            <View style={styles.viewContentModal}>
+                                <ModalImages
+                                    image={this.state.selectedImage}
+                                    closeModal={this.closeModal} />
+                            </View>
+                        </View>
+                    </Modal>
+
+
         return (
             <View style={styles.safeView}>
                 <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
                 <View style={styles.container}>
+                    {modal}
                     <ScrollView>
                         <View style={styles.containerContent}>
                             <Text style={styles.saudacaoStyle}>{saudacaoStep1}</Text>
@@ -329,9 +354,15 @@ export default class RegistroConsulta extends Component {
                                     flex={1}
                                     horizontal={true}
                                     renderItem={({ item }) =>
-                                        <View style={styles.item}>
+                                        <TouchableOpacity 
+                                            onPress={() => {
+                                                this.setState({
+                                                    isModalVisible: true,
+                                                    selectedImage: item
+                                                })
+                                            }} style={styles.item}>
                                             <Image source={{uri: item.uri}} style={{borderRadius: 15, height: 50, width: 50}} />
-                                        </View>
+                                        </TouchableOpacity>
                                     }
                                 />
                                 
@@ -343,7 +374,7 @@ export default class RegistroConsulta extends Component {
                                     this.saveAndCloseWindow()
                                 }}
                                 style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 24 }}>
-                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>{avancarButtonLabel}</Text>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>SALVAR</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
@@ -366,6 +397,19 @@ const styles = StyleSheet.create({
     },
     containerContent: {
         flex: 1,
+        padding: 16
+    },
+    containerModal: {
+        flex: 1,
+        backgroundColor: blackSemiTransparent,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    viewContentModal: {
+        height: '60%',
+        width: '75%',
+        backgroundColor: white,
+        borderRadius: 25,
         padding: 16
     },
     containerTextInput: {
@@ -395,6 +439,5 @@ const styles = StyleSheet.create({
         marginStart: 16,
         height: 50,
         width: 50,
-        borderWidth: 1
     }
 });
