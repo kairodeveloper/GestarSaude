@@ -61,179 +61,179 @@ export default class RedeAtendimentoPage extends Component {
     }
 
     render() {
-        
-        let modalAtendimentoList = <Modal    
-                                        animationType="slide"
-                                        visible={this.state.showModal}
-                                        transparent>
-                                        <View style={styles.containerModal}>
-                                            <View style={styles.viewContentModal}>
-                                                <ModalAtendimento 
-                                                    regiao = {this.state.regiao}
-                                                    closeModal = {this.closeModal} />
-                                            </View>
-                                        </View>
-                                    </Modal>
-    
+
+        let modalAtendimentoList = <Modal
+            animationType="slide"
+            visible={this.state.showModal}
+            transparent>
+            <View style={styles.containerModal}>
+                <View style={styles.viewContentModal}>
+                    <ModalAtendimento
+                        regiao={this.state.regiao}
+                        closeModal={this.closeModal} />
+                </View>
+            </View>
+        </Modal>
+
         return (
             <View style={styles.safeView}>
                 <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
                 {modalAtendimentoList}
                 <View style={styles.container}>
-                    <ImageBackground source={MAPAPIAUI} style={styles.fundoImage}>
-                        <View style={{height: '100%'}}>
-                            <View style={{flex: 1, flexDirection: 'row-reverse'}}>
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                        this.showModalRede(1)
-                                    }}
-                                    style={{width: '30%', marginEnd: 16}}
-                                />
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row-reverse'}}>
-                                <TouchableOpacity 
-                                    onPress={() => {
-                                        this.showModalRede(2)
-                                    }}
-                                    style={{width: '40%', marginEnd: 16}}
-                                />
-                            </View>
-                            <View style={{flex: 3, flexDirection: 'row-reverse'}}>
-                                <View style={{width: '50%', flexDirection: 'row'}}>
-                                    <TouchableOpacity 
+                        <ImageBackground source={MAPAPIAUI} style={styles.fundoImage}>
+                            <View style={{ height: '100%', paddingTop: 16, paddingBottom: 24, paddingStart: 16, paddingEnd: 16 }}>
+                                <View style={{ flex: 1, flexDirection: 'row-reverse' }}>
+                                    <TouchableOpacity
                                         onPress={() => {
-                                            this.showModalRede(3)
+                                            this.showModalRede(1)
                                         }}
-                                        
-                                        style={{flex: 1.25, flexDirection: 'row-reverse'}} 
+                                        style={{ width: '30%', marginEnd: 16 }}
                                     />
-                                    <View style={{flex: 1.75}}>
-                                        <TouchableOpacity 
+                                </View>
+                                <View style={{ flex: 1, flexDirection: 'row-reverse' }}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.showModalRede(2)
+                                        }}
+                                        style={{ width: '40%', marginEnd: 16 }}
+                                    />
+                                </View>
+                                <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
+                                    <View style={{ width: '50%', flexDirection: 'row' }}>
+                                        <TouchableOpacity
                                             onPress={() => {
-                                                this.showModalRede(4)
+                                                this.showModalRede(3)
                                             }}
-                                            
-                                            style={{flex: 2}}
-                                        />       
-                                        <TouchableOpacity 
-                                            onPress={() => {
-                                                this.showModalRede(5)
-                                            }}
-                                            
-                                            style={{flex: 1}}
-                                        />       
+
+                                            style={{ flex: 1.25, flexDirection: 'row-reverse' }}
+                                        />
+                                        <View style={{ flex: 1.75 }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.showModalRede(4)
+                                                }}
+
+                                                style={{ flex: 2,}}
+                                            />
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.showModalRede(5)
+                                                }}
+
+                                                style={{ flex: 1,}}
+                                            />
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                               
-                            <View style={{flex: 5, flexDirection: 'row'}}>
-                                <View style={{flex: 3}}>
-                                    <View style={{flex: 1}}>
-                                        <TouchableOpacity 
-                                            onPress={() => {
-                                                this.showModalRede(6)
-                                            }}
-                                            
-                                            style={{flex: 1.5}} 
-                                        />
-                                        <View style={{flex: 2.5}}>
-                                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                                
-                                                <TouchableOpacity 
-                                                    onPress={() => {
-                                                        this.showModalRede(6)
-                                                    }}
-                                                    
-                                                    style={{flex: 1}} 
-                                                />
-                                                <TouchableOpacity 
+
+                                <View style={{ flex: 5, flexDirection: 'row' }}>
+                                    <View style={{ flex: 3 }}>
+                                        <View style={{ flex: 1 }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.showModalRede(6)
+                                                }}
+
+                                                style={{ flex: 1.5,}}
+                                            />
+                                            <View style={{ flex: 2.5 }}>
+                                                <View style={{ flex: 1, flexDirection: 'row' }}>
+
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            this.showModalRede(6)
+                                                        }}
+
+                                                        style={{ flex: 1,}}
+                                                    />
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            this.showModalRede(7)
+                                                        }}
+
+                                                        style={{ flex: 1,}}
+                                                    />
+                                                </View>
+                                                <TouchableOpacity
                                                     onPress={() => {
                                                         this.showModalRede(7)
                                                     }}
-                                                    
-                                                    style={{flex: 1}}
+
+                                                    style={{ flex: 2,}}
                                                 />
                                             </View>
-                                            <TouchableOpacity 
-                                                onPress={() => {
-                                                    this.showModalRede(7)
-                                                }}
-                                                
-                                                style={{flex: 2}}
-                                            />
                                         </View>
                                     </View>
-                                </View>
-                                <View style={{flex: 2, flexDirection: 'row'}}>
-                                    <View style={{flex: 1}}>
-                                        <View style={{flex: 1.25, flexDirection: 'row'}}>
-                                            <TouchableOpacity 
-                                                onPress={() => {
-                                                    this.showModalRede(8)
-                                                }}
-                                                
-                                                style={{flex: 2}}/>
-                                            <View style={{flex: 1}}>
-                                                <TouchableOpacity 
-                                                    onPress={() => {
-                                                        this.showModalRede(9)
-                                                    }}
-                                                    
-                                                    style={{flex: 1}}
-                                                />
-                                                <TouchableOpacity 
+                                    <View style={{ flex: 2, flexDirection: 'row' }}>
+                                        <View style={{ flex: 1 }}>
+                                            <View style={{ flex: 1.25, flexDirection: 'row' }}>
+                                                <TouchableOpacity
                                                     onPress={() => {
                                                         this.showModalRede(8)
                                                     }}
-                                                    
-                                                    style={{flex: 1}} 
-                                                />
-                                            </View>    
-                                        </View>
-                                        <TouchableOpacity 
-                                            onPress={() => {
-                                                this.showModalRede(10)
-                                            }}
-                                            
-                                            style={{flex: 0.75}}
-                                        />
-                                        <View style={{flex: 1}} />    
-                                    </View>
-                                </View>
-                                <View style={{flex: 2}}>
-                                    <View style={{flex: 2, flexDirection: 'row'}}>
-                                        <View style={{flex: 1}}>
-                                            <TouchableOpacity 
-                                                onPress={() => {
-                                                    this.showModalRede(9)
-                                                }}
-                                                
-                                                style={{flex: 1}}
-                                            />
-                                            <TouchableOpacity 
+
+                                                    style={{ flex: 2,}} />
+                                                <View style={{ flex: 1 }}>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            this.showModalRede(9)
+                                                        }}
+
+                                                        style={{ flex: 1,}}
+                                                    />
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            this.showModalRede(8)
+                                                        }}
+
+                                                        style={{ flex: 1,}}
+                                                    />
+                                                </View>
+                                            </View>
+                                            <TouchableOpacity
                                                 onPress={() => {
                                                     this.showModalRede(10)
                                                 }}
-                                                
-                                                style={{flex: 1}}
+
+                                                style={{ flex: 0.75,}}
                                             />
-                                        </View>
-                                        <View style={{flex: 2}}>
-                                            <TouchableOpacity 
-                                                onPress={() => {
-                                                    this.showModalRede(11)
-                                                }}
-                                                
-                                                style={{flex: 2}} />
-                                            <View style={{flex: 1}}></View>    
+                                            <View style={{ flex: 1 }} />
                                         </View>
                                     </View>
-                                    <View style={{flex: 1}}></View>
-                                </View>             
+                                    <View style={{ flex: 2 }}>
+                                        <View style={{ flex: 2, flexDirection: 'row' }}>
+                                            <View style={{ flex: 1 }}>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        this.showModalRede(9)
+                                                    }}
+
+                                                    style={{ flex: 1,}}
+                                                />
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        this.showModalRede(10)
+                                                    }}
+
+                                                    style={{ flex: 1,}}
+                                                />
+                                            </View>
+                                            <View style={{ flex: 2 }}>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        this.showModalRede(11)
+                                                    }}
+
+                                                    style={{ flex: 2,}} />
+                                                <View style={{ flex: 1 }}></View>
+                                            </View>
+                                        </View>
+                                        <View style={{ flex: 1 }}></View>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                    </ImageBackground>
-                </View>
+                        </ImageBackground>
+                    </View>
             </View>
         )
     }
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+    
         backgroundColor: colorFundo,
         padding: 16
     },
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
         minHeight: 30,
         marginTop: 6,
         flex: 1,
-        borderWidth: 1,
+    
         borderRadius: 15,
         backgroundColor: white
     },

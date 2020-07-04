@@ -11,6 +11,7 @@ import ConsultationSchedules from "./pages/ConsultationSchedules";
 import Contact from "./pages/Contact";
 import RegistroConsulta from './pages/register_data/RegistroConsulta';
 import RedeAtendimentoPage from './pages/user_module/RedeAtendimentoPage';
+import UBSesProximasPage from './pages/user_module/UBSesProximasPage';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -73,6 +74,10 @@ const RootStack = createStackNavigator({
     },
     RedeAtendimentoPage: {
         screen: RedeAtendimentoPage,
+        navigationOptions: navigationOptions
+    },
+    UBSesProximasPage: {
+        screen: UBSesProximasPage,
         navigationOptions: navigationOptions
     }
 },{

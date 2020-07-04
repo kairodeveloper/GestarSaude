@@ -480,9 +480,13 @@ export default class UserMainPage extends Component {
                      style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Rede de atendimento de alto risco a gestante no Piauí</Text>
                     </TouchableOpacity>
-                    <View style={styles.buttonStyle}>
-                      <Text style={styles.textButton}>UBSses mais próximas de você</Text>
-                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate('UBSesProximasPage')
+                      }}
+                      style={styles.buttonStyle}>
+                      <Text style={styles.textButton}>Hospitais mais próximos de você</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
                         this.props.navigation.navigate('Contatos')
