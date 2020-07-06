@@ -284,9 +284,15 @@ function getRegiaoData(value) {
     return retorno
 }
 
+function countDays(dateBegin, dateEnd) {
+    return(Math.round((dateEnd.getTime() - dateBegin.getTime())/(1000*60*60*24)+1))
+}
+
+
 export {
     maskForDate,
     saveExames,
     getRegiaoData,
-    getIconRegiaoById
+    getIconRegiaoById,
+    countDays
 }

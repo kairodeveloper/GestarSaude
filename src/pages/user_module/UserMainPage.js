@@ -36,7 +36,7 @@ import {
   avancarButtonLabel
 } from '../../../strings';
 import { Container, Header, Content, Tab, Tabs } from 'native-base'
-import { maskForDate } from '../../global_components/GlobalFunctions';
+import { maskForDate, countDays } from '../../global_components/GlobalFunctions';
 import { findAllNotRemoved, updateThis, getNextMid, saveThis, findFirstByFilter } from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
@@ -183,6 +183,16 @@ export default class UserMainPage extends Component {
     })
   }
 
+  getSemanaGravidez() {
+    let value = countDays(this.state.gravidez.createdAt, new Date())/7
+    if (value < 1) {
+      return this.state.gravidez.semana
+    } else {
+      value += this.state.gravidez.semana
+      return parseInt(Math.round(value), 10)
+    }
+  }
+
   render() {
     let modal = <Modal
                   animationType="slide"
@@ -310,7 +320,7 @@ export default class UserMainPage extends Component {
         {modal}
         <View style={styles.container}>
           <View style={{ height: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
-            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.state.gravidez.semana}ª semana da sua gravidez</Text>
+            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.getSemanaGravidez()}ª semana da sua gravidez</Text>
           </View>
           <Container>
             <Tabs

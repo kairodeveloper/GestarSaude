@@ -1,4 +1,5 @@
-import Realm from 'realm'
+//import Realm from 'realm'
+const Realm = require('realm');
 import { RealmSchema } from './all_schemes';
 
 let SCHEMA_VERSION = 10
