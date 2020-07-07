@@ -146,15 +146,49 @@ export default class RegistroFirstStep extends Component {
             </View>
             <TouchableOpacity
               onPress={() => {
+                let goOn = true
                 let user = {}
-                user.nome = this.state.nome
-                user.idade = this.state.idade
-                user.cep = this.state.cep
-                user.bairro = this.state.bairro
-                user.logradouro = this.state.logradouro
-                user.num_casa = this.state.num_casa
 
-                this.props.navigation.navigate('RegistroSecondStep', {user: user})
+                if (this.state.nome.length=="") {
+                  alert('Preencha o nome antes...')
+                  goOn = false
+                } 
+
+                if (this.state.idade.length) {
+                    alert('Preencha a idade antes...')
+                    goOn = false
+                } 
+
+                if (this.state.cep.length) {
+                  alert('Preencha o cep antes...')
+                  goOn = false
+                } 
+
+                if (this.state.bairro) {
+                  alert('Preencha o bairro antes...')
+                  goOn = false
+                }
+
+                if (this.state.logradouro.length) {
+                    alert('Preencha o logradouro antes...')
+                    goOn = false
+                } 
+
+                if (this.state.num_casa.length) {
+                    alert('Preencha o número da casa antes...')
+                    goOn = false
+                } 
+
+                if (goOn) {
+                  user.nome = this.state.nome
+                  user.idade = this.state.idade
+                  user.cep = this.state.cep
+                  user.bairro = this.state.bairro
+                  user.logradouro = this.state.logradouro
+                  user.num_casa = this.state.num_casa
+  
+                  this.props.navigation.navigate('RegistroSecondStep', {user: user})  
+                }
               }}
               style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 24 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>{avancarButtonLabel}</Text>

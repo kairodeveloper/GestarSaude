@@ -129,43 +129,62 @@ export default class RegistroThirdStep extends Component {
 
                             <TouchableOpacity
                                 onPress={() => {
+                                    let goOn = true
                                     let user = this.state.user
 
-                                    let usuario = {}
-                                    usuario.mid = getNextMid('Usuario')
-                                    usuario.nome = user.nome
-                                    usuario.idade = parseInt(user.idade)
-                                    usuario.cep = user.cep
-                                    usuario.bairro = user.bairro
-                                    usuario.logradouro = user.logradouro
-                                    usuario.num_casa = user.num_casa
-                                    usuario.cartao_sus = user.cartao_sus
-                                    usuario.createdAt = new Date()
-                                    usuario.removido = false
+                                    if (this.state.semana.length == "") {
+                                        alert('Preencha a semana antes...')
+                                        goOn = false
+                                    }
 
-                                    let gravidez = {}
-                                    gravidez.mid = getNextMid('Gravidez')
-                                    gravidez.semana = parseInt(this.state.semana, 10)
-                                    gravidez.peso = parseFloat(this.state.peso)
-                                    gravidez.nome_bebe = this.state.nome_bebe
-                                    gravidez.sexo_bebe = this.state.is_male
-                                    gravidez.createdAt = new Date()
-                                    gravidez.removido = false
+                                    if (this.state.peso.length == "") {
+                                        alert('Preencha o peso antes...')
+                                        goOn = false
+                                    }
 
-                                    saveThis('Usuario', usuario)
-                                    saveThis('Gravidez', gravidez)
+                                    if (this.state.nome_bebe.length == "") {
+                                        alert('Preencha o nome antes...')
+                                        goOn = false
+                                    }
 
-                                    const resetAction = StackActions.reset({
-                                        index: 0,
-                                        actions: [
-                                            NavigationActions.navigate({
-                                                routeName: 'UserMainPage',
-                                                params: { teste: 'true' }
-                                            })
-                                        ]
-                                    })
+                                    if (goOn) {
+                                        let usuario = {}
+                                        usuario.mid = getNextMid('Usuario')
+                                        usuario.nome = user.nome
+                                        usuario.idade = parseInt(user.idade)
+                                        usuario.cep = user.cep
+                                        usuario.bairro = user.bairro
+                                        usuario.logradouro = user.logradouro
+                                        usuario.num_casa = user.num_casa
+                                        usuario.cartao_sus = user.cartao_sus
+                                        usuario.createdAt = new Date()
+                                        usuario.removido = false
 
-                                    this.props.navigation.dispatch(resetAction)
+                                        let gravidez = {}
+                                        gravidez.mid = getNextMid('Gravidez')
+                                        gravidez.semana = parseInt(this.state.semana, 10)
+                                        gravidez.peso = parseFloat(this.state.peso)
+                                        gravidez.nome_bebe = this.state.nome_bebe
+                                        gravidez.sexo_bebe = this.state.is_male
+                                        gravidez.createdAt = new Date()
+                                        gravidez.removido = false
+
+                                        saveThis('Usuario', usuario)
+                                        saveThis('Gravidez', gravidez)
+
+                                        const resetAction = StackActions.reset({
+                                            index: 0,
+                                            actions: [
+                                                NavigationActions.navigate({
+                                                    routeName: 'UserMainPage',
+                                                    params: { teste: 'true' }
+                                                })
+                                            ]
+                                        })
+
+                                        this.props.navigation.dispatch(resetAction)
+                                    }
+
                                 }}
                                 style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 16 }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>FINALIZAR</Text>

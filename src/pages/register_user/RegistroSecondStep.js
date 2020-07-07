@@ -119,6 +119,7 @@ export default class RegistroSecondStep extends Component {
                             <TouchableOpacity
                                 onPress={() => {
                                     let user = this.state.user
+                      
                                     user.cartao_sus = this.state.cartao_sus
                                     this.props.navigation.navigate('RegistroThirdStep', { user: user })
                                 }}
