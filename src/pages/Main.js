@@ -59,6 +59,13 @@ export default class Main extends Component {
                                     }}>
                     <Text style={styles.textButton}>SOU PROFISSIONAL</Text>
                   </TouchableOpacity>
+
+                  <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
+                                    onPress={() => {
+                                      this.props.navigation.navigate('ScheduleNotification')
+                                    }}>
+                    <Text style={styles.textButton}>NOTIFICAÇÕES</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </ImageBackground>

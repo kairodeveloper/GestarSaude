@@ -13,6 +13,8 @@ import RegistroConsulta from './pages/register_data/RegistroConsulta';
 import RedeAtendimentoPage from './pages/user_module/RedeAtendimentoPage';
 import UBSesProximasPage from './pages/user_module/UBSesProximasPage';
 
+import ScheduleNotification from "./pages/ScheduleNotification";
+
 const navigationOptions = {
     headerTitleStyle: {
         color: white
@@ -78,6 +80,10 @@ const RootStack = createStackNavigator({
     },
     UBSesProximasPage: {
         screen: UBSesProximasPage,
+        navigationOptions: navigationOptions
+    },
+    ScheduleNotification: {
+        screen: ScheduleNotification,
         navigationOptions: navigationOptions
     }
 },{
