@@ -495,7 +495,8 @@ export default class UserMainPage extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        this.props.navigation.navigate('UBSesProximasPage')
+                        alert("Em breve")
+                        //this.props.navigation.navigate('UBSesProximasPage')
                       }}
                       style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Hospitais mais próximos de você</Text>
