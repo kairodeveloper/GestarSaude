@@ -1,6 +1,7 @@
 import { getNextMid, saveThis, isEmpty } from "../../realm_services/RealmService";
 import { func } from "prop-types";
 import { ICONLITORAL, ICONCOCAIS, ICONENTRERIOS, ICONCARNAUBAIS, ICONSAMBITO, ICONALTOPARNAIBA, ICONMANGABEIRAS, ICONITAUEIRAS, ICONCANINDE, ICONCAPIVARA, ICONGUARIBAS } from "../../images";
+import Notification from "../services/Notification";
 
 function maskForDate(date) {
     let retorno = ""
@@ -167,7 +168,7 @@ function getRegiaoData(value) {
                 {nome: "Unidade de Urgência de Teresina Prof. Zenon Rocha - HUT", cidade: "Teresina"},
                 {nome: "Casamater", cidade: "Teresina"},
                 {nome: "Prontomed Infantil", cidade: "Teresina"},
-                {nome: "Unidade de Urgência de Teresina Prof. Zenon Rocha - HUT", cidade: "Teresina"},   
+                {nome: "Unidade de Urgência de Teresina Prof. Zenon Rocha - HUT", cidade: "Teresina"},
                 {nome: "Hospital Senador Dirceu Mendes Arcoverde", cidade: "Água Branca"},
                 {nome: "Hospital De Amarante", cidade: "Amarante"},
                 {nome: "UMS Jurandi Mendes", cidade: "Angical"},
@@ -186,7 +187,7 @@ function getRegiaoData(value) {
                 {nome: "UMS São Joaã Da Serra", cidade: "São João da Serra"},
                 {nome: "Hosp Local De Matias Olimpio", cidade: "Madeiro"},
             ]
-            
+
         },{
             id: 5,
             name: "Vale do Sambito",
@@ -284,9 +285,37 @@ function getRegiaoData(value) {
     return retorno
 }
 
+
+function getScheduleConsultationAlert(dateString, timeString, message) {
+
+    const date = new Date();
+    const dateSplited = dateString.split('/');
+    const hourSplited = timeString.split(':');
+
+    date.setDate(parseInt(dateSplited[0]));
+    date.setMonth(parseInt(dateSplited[1]) - 1);
+    date.setFullYear(parseInt(dateSplited[2]));
+    date.setHours(parseInt(hourSplited[0]));
+    date.setMinutes(parseInt(hourSplited[1]));
+
+    console.log("Passou mesmo")
+
+    Notification
+        .configure()
+        .localNotificationSchedule({ // notificação agendada
+            message: `Lembrete de consulta: ${message}`,
+            date: date
+        });
+
+}
+
+
+
+
 export {
     maskForDate,
     saveExames,
     getRegiaoData,
-    getIconRegiaoById
+    getIconRegiaoById,
+    getScheduleConsultationAlert
 }

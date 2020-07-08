@@ -11,6 +11,7 @@ import {
     blackSemiTransparent, colorPrimary, white, colorFundo,
 } from '../../colors';
 import {NEXT, PREVIOUS, ICONCALENDAR} from "../../images";
+import {getScheduleConsultationAlert} from "../global_components/GlobalFunctions";
 
 
 export default class ConsultationSchedules extends Component {
@@ -33,9 +34,11 @@ export default class ConsultationSchedules extends Component {
     render() {
 
         let items = [
-            {name: 'UBS São Cristovão', data: '11/08/2019', time: '09:00'},
-            {name: 'UBS São Cristovão', data: '07/08/2019', time: '08:00'},
+            {name: 'UBS São Cristovão', data: '08/07/2020', time: '13:52'},
+            {name: 'UBS São Miguel', data: '08/07/2020', time: '13:53'},
         ];
+
+        items.map(item => getScheduleConsultationAlert(item.data, item.time, item.name));
 
         return (
             <View style={styles.safeView}>
@@ -43,7 +46,7 @@ export default class ConsultationSchedules extends Component {
                     <Image source={PREVIOUS} style={styles.arrowsStyle}/>
                     <View style={styles.dataStyle}>
                         <Text style={styles.monthStyle}>AGOSTO</Text>
-                        <Text style={styles.yearStyle}>2019</Text>
+                        <Text style={styles.yearStyle}>2020</Text>
                     </View>
                     <Image source={NEXT} style={styles.arrowsStyle}/>
                 </View>
