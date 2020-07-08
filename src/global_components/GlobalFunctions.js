@@ -297,8 +297,9 @@ function getScheduleConsultationAlert(dateString, timeString, message) {
     date.setFullYear(parseInt(dateSplited[2]));
     date.setHours(parseInt(hourSplited[0]));
     date.setMinutes(parseInt(hourSplited[1]));
+    date.setSeconds(0);
 
-    console.log("Passou mesmo")
+    console.log("Passou mesmo!")
 
     Notification
         .configure()
