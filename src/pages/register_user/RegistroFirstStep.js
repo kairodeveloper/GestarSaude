@@ -149,32 +149,32 @@ export default class RegistroFirstStep extends Component {
                 let goOn = true
                 let user = {}
 
-                if (this.state.nome.length=="") {
+                if (this.state.nome.length==0) {
                   alert('Preencha o nome antes...')
                   goOn = false
                 } 
 
-                if (this.state.idade.length) {
+                if (this.state.idade.length==0) {
                     alert('Preencha a idade antes...')
                     goOn = false
                 } 
 
-                if (this.state.cep.length) {
+                if (this.state.cep.length==0) {
                   alert('Preencha o cep antes...')
                   goOn = false
                 } 
 
-                if (this.state.bairro) {
+                if (this.state.bairro.length==0) {
                   alert('Preencha o bairro antes...')
                   goOn = false
                 }
 
-                if (this.state.logradouro.length) {
+                if (this.state.logradouro.length==0) {
                     alert('Preencha o logradouro antes...')
                     goOn = false
                 } 
 
-                if (this.state.num_casa.length) {
+                if (this.state.num_casa.length==0) {
                     alert('Preencha o número da casa antes...')
                     goOn = false
                 } 
@@ -217,11 +217,12 @@ const styles = StyleSheet.create({
     padding: 16
   },
   containerTextInput: {
-    minHeight: 30,
+    minHeight: 50,
     marginTop: 6,
     paddingStart: 6,
     borderWidth: 1,
     borderRadius: 15,
+    justifyContent: "center",
     backgroundColor: white
   },
   textOverField: {

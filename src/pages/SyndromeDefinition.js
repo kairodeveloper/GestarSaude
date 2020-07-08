@@ -580,6 +580,7 @@ export default class SyndromeDefinition extends Component {
             }
         ];
         this.state = {
+            isAndroid: Platform.OS=="android",
             isModalVisible: false,
             selectedItem: null
         };
@@ -600,7 +601,7 @@ export default class SyndromeDefinition extends Component {
     renderItem = ({item}) => (
         <TouchableOpacity onPress={() => {
             this.showModal(item)
-        }} style={styles.item}>
+        }} style={ this.state.isAndroid ? styles.itemAndroid : styles.itemIos}>
             <Text style={styles.titleItem}>{item.name}</Text>
         </TouchableOpacity>
     );
@@ -637,7 +638,8 @@ export default class SyndromeDefinition extends Component {
 
 const styles = StyleSheet.create({
     safeView: {
-        paddingTop: Platform.OS === 'ios' ? 44 : 0,
+        paddingTop: 16,
+        paddingBottom: 16,
         flex: 1,
         flexDirection: "column",
         backgroundColor: colorFundo,
@@ -668,7 +670,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    item: {
+    itemAndroid: {
         minHeight: 50, 
         backgroundColor: white, 
         elevation: 2, 
@@ -681,9 +683,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+    itemIos: {
+        minHeight: 50, 
+        backgroundColor: white, 
+        borderWidth: 1,
+        borderColor: fontColor, 
+        borderRadius: 15, 
+        marginBottom: 16, 
+        padding: 6, 
+        paddingStart: 16, 
+        paddingEnd: 16, 
+        justifyContent: 'center'
+    },
+
     titleItem: {
         fontSize: 24,
         fontWeight: 'bold',
+        textAlign: 'center',
         color: fontColor
     },
 

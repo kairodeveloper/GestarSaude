@@ -76,10 +76,11 @@ export default class RegistroConsulta extends Component {
             pressao_y = consulta.pressao_y.toString()
             observacao = consulta.observacao
 
+            let a = "" 
             consulta.anexos.map((it) => {
                 anexos.push(JSON.parse(it))
-            })
-
+                a+=it +" \n"
+            }) 
             edit = true
         }
 
@@ -109,6 +110,8 @@ export default class RegistroConsulta extends Component {
           storageOptions: {
             skipBackup: true,
             path: 'images',
+            cameraRoll: true, 
+            waitUntilSaved: true
           },
         };
         ImagePicker.showImagePicker(options, response => {
@@ -122,8 +125,9 @@ export default class RegistroConsulta extends Component {
             console.log('User tapped custom button: ', response.customButton);
             alert(response.customButton);
           } else {
-            let source = response;
-            let files = this.state.filesPath
+            let source = Platform.OS==='android' ? response.uri : response.uri.replace('file://', '')
+
+              let files = this.state.filesPath
 
             files.push(source)
 
@@ -361,7 +365,7 @@ export default class RegistroConsulta extends Component {
                                                     selectedImage: item
                                                 })
                                             }} style={styles.item}>
-                                            <Image source={{uri: item.uri}} style={{borderRadius: 15, height: 50, width: 50}} />
+                                                <Image source={{uri:  item}} style={{borderRadius: 15, height: 50, width: 50}} />
                                         </TouchableOpacity>
                                     }
                                 />
@@ -413,9 +417,10 @@ const styles = StyleSheet.create({
         padding: 16
     },
     containerTextInput: {
-        minHeight: 30,
+        minHeight: 50,
         marginTop: 6,
         paddingStart: 6,
+        justifyContent: 'center',
         borderWidth: 1,
         borderRadius: 15,
         backgroundColor: white

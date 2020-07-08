@@ -113,8 +113,8 @@ export default class RegistroThirdStep extends Component {
                                             is_male: !this.state.is_male
                                         })
                                     }}
-                                    style={[styles.containerTextInput, { backgroundColor: this.state.is_male ? blue : white, height: 60, alignItems: 'center', marginEnd: 8 }]}>
-                                    <Image source={ICONBOY} style={{ height: 56, width: 56 }} />
+                                    style={[styles.containerSelectSex, { backgroundColor: this.state.is_male ? blue : white, height: 60, alignItems: 'center', marginEnd: 8 }]}>
+                                    <Image source={ICONBOY} style={{ height: 40, aspectRatio: 1 }} />
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
@@ -122,8 +122,8 @@ export default class RegistroThirdStep extends Component {
                                             is_male: !this.state.is_male
                                         })
                                     }}
-                                    style={[styles.containerTextInput, { backgroundColor: this.state.is_male ? white : pink, height: 60, alignItems: 'center', marginEnd: 8 }]}>
-                                    <Image source={ICONGIRL} style={{ height: 56, width: 56 }} />
+                                    style={[styles.containerSelectSex, { backgroundColor: this.state.is_male ? white : pink, height: 60, alignItems: 'center', marginEnd: 8 }]}>
+                                    <Image source={ICONGIRL} style={{ height: 40, aspectRatio: 1 }} />
                                 </TouchableOpacity>
                             </View>
 
@@ -132,17 +132,17 @@ export default class RegistroThirdStep extends Component {
                                     let goOn = true
                                     let user = this.state.user
 
-                                    if (this.state.semana.length == "") {
+                                    if (this.state.semana.length == 0) {
                                         alert('Preencha a semana antes...')
                                         goOn = false
                                     }
 
-                                    if (this.state.peso.length == "") {
+                                    if (this.state.peso.length == 0) {
                                         alert('Preencha o peso antes...')
                                         goOn = false
                                     }
 
-                                    if (this.state.nome_bebe.length == "") {
+                                    if (this.state.nome_bebe.length == 0) {
                                         alert('Preencha o nome antes...')
                                         goOn = false
                                     }
@@ -213,10 +213,22 @@ const styles = StyleSheet.create({
         padding: 16
     },
     containerTextInput: {
-        minHeight: 30,
+        minHeight: 50,
         marginTop: 6,
         flex: 1,
+        justifyContent: "center",
         borderWidth: 1,
+        paddingStart: 16,
+        borderRadius: 15,
+        backgroundColor: white
+    },
+    containerSelectSex: {
+        minHeight: 50,
+        marginTop: 6,
+        flex: 1,
+        justifyContent: "center",
+        borderWidth: 1,
+        
         borderRadius: 15,
         backgroundColor: white
     },

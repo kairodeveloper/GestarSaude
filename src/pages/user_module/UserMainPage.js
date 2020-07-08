@@ -127,7 +127,7 @@ export default class UserMainPage extends Component {
             onPress={() => {
               this.setExameFeito(it.mid)
             }}
-            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', elevation: 2, shadowOffset: 15, backgroundColor: white }}>
+            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', borderBottomColor: fontColor,  backgroundColor: white }}>
             <View flex={4}>
               <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>{it.nome}</Text>
             </View>
@@ -316,8 +316,10 @@ export default class UserMainPage extends Component {
 
     return (
       <View style={styles.safeView}>
+        {modal}        
         <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
-        {modal}
+
+
         <View style={styles.container}>
           <View style={{ height: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
             <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.getSemanaGravidez()}ª semana da sua gravidez</Text>
@@ -351,7 +353,7 @@ export default class UserMainPage extends Component {
                               numeroConsultas: this.state.consultas.length
                             })
                           }}
-                          style={{ minHeight: 100, backgroundColor: white, elevation: 2, shadowOpacity: 10, borderRadius: 15, marginBottom: 16, paddingTop: 10, paddingBottom: 10, paddingStart: 6, paddingEnd: 6, justifyContent: 'center', marginRight: 6 }}>
+                          style={{ minHeight: 100, backgroundColor: white, borderWidth: 1, borderColor: fontColor, borderRadius: 15, marginBottom: 16, paddingTop: 10, paddingBottom: 10, paddingStart: 6, paddingEnd: 6, justifyContent: 'center', marginRight: 6 }}>
                           <View style={{ height: 25, paddingStart: 6 }}>
                             <Text style={{ color: fontColor }}>{maskForDate(item.data)}</Text>
                           </View>
@@ -398,7 +400,7 @@ export default class UserMainPage extends Component {
                             rotationT1: this.state.rotationT1==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', elevation: 2, shadowOffset: 15, backgroundColor: white }}>
+                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor,  backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>1º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT1 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -418,7 +420,7 @@ export default class UserMainPage extends Component {
                             rotationT2: this.state.rotationT2==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', elevation: 2, shadowOffset: 15, backgroundColor: white }}>
+                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor, backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>2º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT2 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -438,7 +440,7 @@ export default class UserMainPage extends Component {
                             rotationT3: this.state.rotationT3==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', elevation: 2, shadowOffset: 15, backgroundColor: white }}>
+                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor,  backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>3º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT3 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -518,7 +520,6 @@ export default class UserMainPage extends Component {
 
 const styles = StyleSheet.create({
   safeView: {
-    paddingTop: Platform.OS === 'ios' ? 44 : 0,
     flex: 1,
     flexDirection: "column",
     backgroundColor: "transparent"
@@ -584,8 +585,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     minHeight: 60,
     backgroundColor: white,
-    elevation: 2,
-    shadowOpacity: 10,
+    borderWidth: 1,
+    borderColor: fontColor,
     marginBottom: 16,
     padding: 16,
     justifyContent: 'center',

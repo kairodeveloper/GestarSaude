@@ -47,7 +47,7 @@ esse link vai para o Quadro 04: Recomendação de prática clínica, Teresina, 2
                 </View>
                 <ScrollView>
                     <View style={styles.viewContentModal}>
-                        <Text style={{textAlign: 'justify', marginTop: 6, fontSize: 16}}>{this.props.item.description}</Text>
+                        <Text style={styles.subtitleItem }>{this.props.item.description}</Text>
                     </View>
                 </ScrollView>
                 { this.props.item.quadro==2 || this.props.item.quadro==4 ? (
@@ -100,15 +100,15 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     titleModal: {
-        fontSize: 16,
-        textTransform: 'uppercase',
+        fontSize: 18,
+        textTransform: 'capitalize',
         fontWeight: 'bold',
-        textAlign: 'left'
+        textAlign: 'center',
+        color: fontColor
     },
     viewContentModal: {
         flex: 1,
-        paddingStart: 16,
-        paddingEnd: 16
+        padding: 16
     },
     item: { 
         minHeight: 50, 
@@ -122,14 +122,16 @@ const styles = StyleSheet.create({
         paddingEnd: 16, 
         justifyContent: 'center'
     },
-    titleItem: {
-        fontSize: 16,
+    titleItem: { 
+        fontSize: 24,
         fontWeight: 'bold',
-        color: fontColor
+        textAlign: 'justify',
+        color: fontColor 
     },
     subtitleItem: {
         fontSize: 14,
-        color: fontColor
+        color: fontColor,
+        textAlign: 'justify'
     }
 });
 

@@ -150,10 +150,12 @@ const styles = StyleSheet.create({
         padding: 16
     },
     containerTextInput: {
-        minHeight: 30,
+        minHeight: 50,
         marginTop: 16,
         borderWidth: 1,
         borderRadius: 15,
+        paddingStart: 16,
+        justifyContent: "center",
         backgroundColor: white
     },
     fundoImage: {
