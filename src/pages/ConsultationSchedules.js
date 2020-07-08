@@ -4,14 +4,15 @@ import {
     View,
     Text,
     Platform,
-    TouchableOpacity, Image,
+    TouchableOpacity, Image, ScrollView,
 } from 'react-native'
 import {
     black,
     blackSemiTransparent, colorPrimary, white, colorFundo,
 } from '../../colors';
 import {NEXT, PREVIOUS, ICONCALENDAR} from "../../images";
-import {getScheduleConsultationAlert} from "../global_components/GlobalFunctions";
+import {FormatDateToString, getScheduleConsultationAlert} from "../global_components/GlobalFunctions";
+import {findAllNotRemoved, findFirstByFilter} from "../../realm_services/RealmService";
 
 
 export default class ConsultationSchedules extends Component {
@@ -28,30 +29,43 @@ export default class ConsultationSchedules extends Component {
     }
 
     constructor(props) {
-        super(props)
+        super(props);
+
+        const { navigation } = this.props;
+
+        let agendamentosBD = findAllNotRemoved('Agendamento');
+        let agendamentos = [];
+
+        agendamentosBD.map((agendamento) => {
+            agendamentos.push({
+                mid: agendamento.mid,
+                nome: agendamento.nome,
+                data: agendamento.data,
+                hora: agendamento.hora,
+            })
+        })
+
+        this.state = {
+            agendamentos: agendamentos
+        }
+    }
+
+    refreshAgendamentos = () => {
+        let agendamentos = findAllNotRemoved('Agendamento')
+        this.setState({
+            agendamentos: agendamentos
+        });
     }
 
     render() {
 
-        let items = [
-            {name: 'UBS São Cristovão', data: '08/07/2020', time: '13:52'},
-            {name: 'UBS São Miguel', data: '08/07/2020', time: '13:53'},
-        ];
-
-        items.map(item => getScheduleConsultationAlert(item.data, item.time, item.name));
+        // items.map(item => getScheduleConsultationAlert(item.data, item.time, item.name));
 
         return (
             <View style={styles.safeView}>
-                <View style={styles.containerData}>
-                    <Image source={PREVIOUS} style={styles.arrowsStyle}/>
-                    <View style={styles.dataStyle}>
-                        <Text style={styles.monthStyle}>AGOSTO</Text>
-                        <Text style={styles.yearStyle}>2020</Text>
-                    </View>
-                    <Image source={NEXT} style={styles.arrowsStyle}/>
-                </View>
+                <ScrollView>
                 <View style={styles.listConsultations}>
-                    {items.map((item) => {
+                    {this.state.agendamentos.map((item) => {
                         return (
                             <TouchableOpacity style={styles.consultationCard}
                                               onPress={() => this.props.navigation.navigate('ConsultationSchedules')}>
@@ -60,16 +74,28 @@ export default class ConsultationSchedules extends Component {
                                         <Image source={ICONCALENDAR} style={styles.calendarStyle}/>
                                     </View>
                                     <View>
-                                        <Text style={[styles.textBase, styles.textData]}>{item.data}</Text>
-                                        <Text style={[styles.textBase, styles.textConsultation]}>{item.name}</Text>
-                                        <Text style={[styles.textBase, styles.textTime]}>{item.time}</Text>
+                                        <Text style={[styles.textBase, styles.textData]}>{FormatDateToString(item.data)}</Text>
+                                        <Text style={[styles.textBase, styles.textConsultation]}>{item.nome}</Text>
+                                        <Text style={[styles.textBase, styles.textTime]}>{item.hora}</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>
-
                         )
                     })}
                 </View>
+                <View style={styles.buttonAddView}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('RegistroAgendamento', {
+                                onGoBack: this.refreshAgendamentos,
+                                numeroAgendamentos: this.state.agendamentos.length
+                            })
+                        }}
+                        style={styles.buttonAddSchedule}>
+                        <Text style={styles.textButtonAdd}>NOVO AGENDAMENTO</Text>
+                    </TouchableOpacity>
+                </View>
+                </ScrollView>
             </View>
         )
     }
@@ -159,5 +185,28 @@ const styles = StyleSheet.create({
     textTime: {
         fontSize: 18,
     },
+
+    buttonAddView: {
+        flex: 1,
+        width: '100%',
+        marginTop: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    buttonAddSchedule: {
+        minHeight: 60,
+        width: '90%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25,
+        backgroundColor: colorPrimary,
+    },
+
+    textButtonAdd: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: white
+    }
 
 });

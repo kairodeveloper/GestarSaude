@@ -286,11 +286,12 @@ function getRegiaoData(value) {
 }
 
 
-function getScheduleConsultationAlert(dateString, timeString, message) {
+function getScheduleConsultationAlert(schedule) {
 
     const date = new Date();
-    const dateSplited = dateString.split('/');
-    const hourSplited = timeString.split(':');
+    const data = FormatDateToString(schedule['data']);
+    const dateSplited = data.split('/');
+    const hourSplited = schedule['hora'].split(':');
 
     date.setDate(parseInt(dateSplited[0]));
     date.setMonth(parseInt(dateSplited[1]) - 1);
@@ -304,10 +305,18 @@ function getScheduleConsultationAlert(dateString, timeString, message) {
     Notification
         .configure()
         .localNotificationSchedule({ // notificação agendada
-            message: `Lembrete de consulta: ${message}`,
+            message: `Lembrete de consulta: ${schedule['nome']}`,
             date: date
         });
 
+}
+
+
+function FormatDateToString(data) {
+
+    var date = data.toISOString().substr(0, 10).split('-');
+
+    return `${date[2]}/${date[1]}/${date[0]}`;
 }
 
 
@@ -318,5 +327,6 @@ export {
     saveExames,
     getRegiaoData,
     getIconRegiaoById,
-    getScheduleConsultationAlert
+    getScheduleConsultationAlert,
+    FormatDateToString
 }

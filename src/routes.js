@@ -14,6 +14,7 @@ import RedeAtendimentoPage from './pages/user_module/RedeAtendimentoPage';
 import UBSesProximasPage from './pages/user_module/UBSesProximasPage';
 
 import ScheduleNotification from "./pages/ScheduleNotification";
+import RegistroAgendamento from "./pages/register_data/RegistroAgendamento";
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -85,7 +86,11 @@ const RootStack = createStackNavigator({
     ScheduleNotification: {
         screen: ScheduleNotification,
         navigationOptions: navigationOptions
-    }
+    },
+    RegistroAgendamento: {
+        screen: RegistroAgendamento,
+        navigationOptions: navigationOptions
+    },
 },{
     initialRouteName: 'Main'
 });
