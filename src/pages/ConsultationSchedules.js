@@ -10,9 +10,9 @@ import {
     black,
     blackSemiTransparent, colorPrimary, white, colorFundo,
 } from '../../colors';
-import {NEXT, PREVIOUS, ICONCALENDAR} from "../../images";
-import {FormatDateToString, getScheduleConsultationAlert} from "../global_components/GlobalFunctions";
-import {findAllNotRemoved, findFirstByFilter} from "../../realm_services/RealmService";
+import { ICONCALENDAR } from "../../images";
+import {FormatDateToString } from "../global_components/GlobalFunctions";
+import {findAllNotRemoved } from "../../realm_services/RealmService";
 
 
 export default class ConsultationSchedules extends Component {
@@ -30,8 +30,6 @@ export default class ConsultationSchedules extends Component {
 
     constructor(props) {
         super(props);
-
-        const { navigation } = this.props;
 
         let agendamentosBD = findAllNotRemoved('Agendamento');
         let agendamentos = [];
