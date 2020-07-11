@@ -57,5 +57,17 @@ export const RealmSchema = [
             createdAt: { type: 'date', default: Date() },
             removido: { type: 'bool', default: false }
         }
+    },
+    {
+        name: 'Agendamento',
+        primaryKey: 'mid',
+        properties: {
+            mid: { type: 'int', indexed: true },
+            nome: { type: 'string', default: "" },
+            data: { type: 'date', default: Date() },
+            hora: { type: 'string', default: "" },
+            createdAt: { type: 'date', default: Date() },
+            removido: { type: 'bool', default: false }
+        }
     }
 ]

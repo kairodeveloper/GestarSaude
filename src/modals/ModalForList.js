@@ -52,7 +52,7 @@ export default class ModalForList extends Component {
                         renderItem={({ item }) =>
                             <View style={styles.item}>
                                 <Text style={styles.titleItem}>{item.nome}</Text>
-                                <Text style={styles.subtitleItem}>{item.cidade}</Text>
+                                <Text style={styles.subtitleItem}>{item.cidade} - {item.endereco}</Text>
                             </View>
                         }
                     />

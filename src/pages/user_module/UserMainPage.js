@@ -48,7 +48,7 @@ export default class UserMainPage extends Component {
   constructor(props) {
     super(props)
     const { navigation } = this.props
-    
+
     let exames = []
     let examesBD = findAllNotRemoved('Exame')
     let consultas = findAllNotRemoved('Consulta')
@@ -127,7 +127,7 @@ export default class UserMainPage extends Component {
             onPress={() => {
               this.setExameFeito(it.mid)
             }}
-            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', borderBottomColor: fontColor,  backgroundColor: white }}>
+            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: fontColor,  backgroundColor: white }}>
             <View flex={4}>
               <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>{it.nome}</Text>
             </View>
@@ -217,7 +217,7 @@ export default class UserMainPage extends Component {
                         <View style={{marginTop: 6, justifyContent: 'center'}}>
                           <Text style={{fontSize: 16, color: fontColor}}>Selecione o trimestre</Text>
                           <View style={{height: 50, flexDirection: 'row'}}>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                               onPress={() => {
                                 this.setState({
                                   trimestreSelecionado: 1
@@ -228,18 +228,18 @@ export default class UserMainPage extends Component {
                                   styles.buttonTrimestreSelecionado
                                  ) : (
                                   styles.buttonTrimestre
-                                 ), 
+                                 ),
                                  { marginEnd: 6 }]
                             }>
-                            <Text style={this.state.trimestreSelecionado==1 ? 
-                                ( 
-                                  styles.textTrimestreSelecionado 
+                            <Text style={this.state.trimestreSelecionado==1 ?
+                                (
+                                  styles.textTrimestreSelecionado
                                 ) : (
                                   styles.textTrimestre
                                 )
                             }>1º</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                               onPress={() => {
                                 this.setState({
                                   trimestreSelecionado: 2
@@ -250,19 +250,19 @@ export default class UserMainPage extends Component {
                                   styles.buttonTrimestreSelecionado
                                  ) : (
                                   styles.buttonTrimestre
-                                 ), 
+                                 ),
                                  { marginEnd: 6 }]
                             }>
-                              
-                            <Text style={this.state.trimestreSelecionado==2 ? 
-                                ( 
-                                  styles.textTrimestreSelecionado 
+
+                            <Text style={this.state.trimestreSelecionado==2 ?
+                                (
+                                  styles.textTrimestreSelecionado
                                 ) : (
                                   styles.textTrimestre
                                 )
                             }>2º</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                               onPress={() => {
                                 this.setState({
                                   trimestreSelecionado: 3
@@ -273,12 +273,12 @@ export default class UserMainPage extends Component {
                                   styles.buttonTrimestreSelecionado
                                  ) : (
                                   styles.buttonTrimestre
-                                 ), 
+                                 ),
                                  { marginStart: 6 }]
                             }>
-                              <Text style={this.state.trimestreSelecionado==3 ? 
-                                  ( 
-                                    styles.textTrimestreSelecionado 
+                              <Text style={this.state.trimestreSelecionado==3 ?
+                                  (
+                                    styles.textTrimestreSelecionado
                                   ) : (
                                     styles.textTrimestre
                                   )
@@ -307,7 +307,7 @@ export default class UserMainPage extends Component {
                             this.saveExame()
                           }}
                           style={styles.styleButton}>
-                          <Text style={styles.textForButton}>SALVAR</Text> 
+                          <Text style={styles.textForButton}>SALVAR</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -345,11 +345,11 @@ export default class UserMainPage extends Component {
                       snapToAlignment={"center"}
                       flex={1}
                       renderItem={({ item }) =>
-                        <TouchableOpacity 
+                        <TouchableOpacity
                           onPress={() => {
                             this.props.navigation.navigate('RegistroConsulta', {
                               onGoBack: this.refreshConsultas,
-                              midConsulta: item.mid, 
+                              midConsulta: item.mid,
                               numeroConsultas: this.state.consultas.length
                             })
                           }}
@@ -393,14 +393,14 @@ export default class UserMainPage extends Component {
                 <View style={styles.containerTabsNoPadding}>
                   <ScrollView>
                     <View flex={1}>
-                      <TouchableOpacity 
+                      <TouchableOpacity
                         onPress={() => {
                           this.setState({
                             showTrimestre1: !this.state.showTrimestre1,
                             rotationT1: this.state.rotationT1==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor,  backgroundColor: white }}>
+                        style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>1º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT1 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -413,14 +413,14 @@ export default class UserMainPage extends Component {
                         <View />
                       ) }
 
-                      <TouchableOpacity 
+                      <TouchableOpacity
                         onPress={() => {
                           this.setState({
                             showTrimestre2: !this.state.showTrimestre2,
                             rotationT2: this.state.rotationT2==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor, backgroundColor: white }}>
+                        style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>2º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT2 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -433,14 +433,14 @@ export default class UserMainPage extends Component {
                         <View />
                       ) }
 
-                      <TouchableOpacity 
+                      <TouchableOpacity
                         onPress={() => {
                           this.setState({
                             showTrimestre3: !this.state.showTrimestre3,
                             rotationT3: this.state.rotationT3==='180deg' ? '0deg' : '180deg'
                           })
                         }}
-                        style={{ height: 60,borderBottomWidth: 1, borderColor: fontColor,  paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomColor: fontColor,  backgroundColor: white }}>
+                        style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>3º trimestre</Text>
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT3 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
@@ -487,6 +487,13 @@ export default class UserMainPage extends Component {
                     </TouchableOpacity>
                     */}
                     <TouchableOpacity
+                        onPress={() => {
+                          this.props.navigation.navigate('ConsultationSchedules')
+                        }}
+                        style={styles.buttonStyle}>
+                      <Text style={styles.textButton}>Consultas Agendadas</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                       onPress={() => {
                         this.props.navigation.navigate('RedeAtendimentoPage')
                       }}
@@ -495,8 +502,7 @@ export default class UserMainPage extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        alert("Em breve")
-                        //this.props.navigation.navigate('UBSesProximasPage')
+                        this.props.navigation.navigate('UBSesProximasPage')
                       }}
                       style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Hospitais mais próximos de você</Text>
@@ -558,10 +564,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   viewForButton: {
-    flex: 1, 
-    padding: 10, 
-    flexDirection: 'column', 
-    justifyContent: 'center', 
+    flex: 1,
+    padding: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   viewContentModal: {
@@ -612,12 +618,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textForButton: {
-    fontSize: 18, 
+    fontSize: 18,
     fontWeight: 'bold',
     color: white
   },
   buttonTrimestre: {
-    flex: 1, 
+    flex: 1,
     borderRadius: 10,
     backgroundColor: white,
     elevation: 2,
@@ -626,7 +632,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonTrimestreSelecionado: {
-    flex: 1, 
+    flex: 1,
     borderRadius: 10,
     backgroundColor: colorPrimaryDark,
     elevation: 2,

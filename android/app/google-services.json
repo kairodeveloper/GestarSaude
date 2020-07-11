@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "253194112939",
+    "firebase_url": "https://gestarsaude-fba81.firebaseio.com",
+    "project_id": "gestarsaude-fba81",
+    "storage_bucket": "gestarsaude-fba81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253194112939:android:786aa41c0d984248080cee",
+        "android_client_info": {
+          "package_name": "com.gestarsaude"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253194112939-gkr4c97vnvu9drnmu4shhtibu5oeuoov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaeQIeXWLRDpdnVeP1FZa-FBBmKPruYmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253194112939-gkr4c97vnvu9drnmu4shhtibu5oeuoov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

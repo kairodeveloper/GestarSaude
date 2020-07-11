@@ -55,7 +55,7 @@ export default class Main extends Component {
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.button, { marginBottom: 6}]}
                                     onPress={() => {
-                                      this.props.navigation.navigate('SyndromeDefinition')
+                                      this.props.navigation.navigate('ModuloProfissional')
                                     }}>
                     <Text style={styles.textButton}>SOU PROFISSIONAL</Text>
                   </TouchableOpacity>

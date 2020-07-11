@@ -13,6 +13,12 @@ import RegistroConsulta from './pages/register_data/RegistroConsulta';
 import RedeAtendimentoPage from './pages/user_module/RedeAtendimentoPage';
 import UBSesProximasPage from './pages/user_module/UBSesProximasPage';
 
+import ScheduleNotification from "./pages/ScheduleNotification";
+import RegistroAgendamento from "./pages/register_data/RegistroAgendamento";
+import ModuloProfissional from './pages/ModuloProfissional';
+import FluxoAtendimentoGestante from './pages/FluxoAtendimentoGestante';
+import CalculadorFatorRisco from './pages/CalculadorFatorRisco';
+
 const navigationOptions = {
     headerTitleStyle: {
         color: white
@@ -78,6 +84,26 @@ const RootStack = createStackNavigator({
     },
     UBSesProximasPage: {
         screen: UBSesProximasPage,
+        navigationOptions: navigationOptions
+    },
+    ScheduleNotification: {
+        screen: ScheduleNotification,
+        navigationOptions: navigationOptions
+    },
+    RegistroAgendamento: {
+        screen: RegistroAgendamento,
+        navigationOptions: navigationOptions
+    },
+    ModuloProfissional: {
+        screen: ModuloProfissional,
+        navigationOptions: navigationOptions
+    },
+    FluxoAtendimentoGestante: {
+        screen: FluxoAtendimentoGestante,
+        navigationOptions: navigationOptions
+    },
+    CalculadorFatorRisco: {
+        screen: CalculadorFatorRisco,
         navigationOptions: navigationOptions
     }
 },{

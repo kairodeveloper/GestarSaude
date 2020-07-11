@@ -79,6 +79,8 @@ target 'GestarSaude' do
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  pod 'toolbar-android', :path => '../node_modules/@react-native-community/toolbar-android'
+
   target 'GestarSaudeTests' do
     inherit! :complete
     # Pods for testing

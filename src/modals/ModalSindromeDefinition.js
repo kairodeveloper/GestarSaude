@@ -50,14 +50,10 @@ esse link vai para o Quadro 04: Recomendação de prática clínica, Teresina, 2
                         <Text style={styles.subtitleItem }>{this.props.item.description}</Text>
                     </View>
                 </ScrollView>
-                { this.props.item.quadro==2 || this.props.item.quadro==4 ? (
+                { this.props.item.link!="" ? (
                     <TouchableOpacity
                         onPress={() => {
-                            if (this.props.item.quadro==2) {
-                                Linking.openURL('http://www.saude.pi.gov.br/ckeditor_assets/attachments/1762/LINHAS-GERAIS-PARA-QUALIFICACAO-DO-CUIDADO-PRE-NATAL.pdf')
-                            } else {
-                                Linking.openURL('https://pubmed.ncbi.nlm.nih.gov/28133834/')
-                            }
+                            Linking.openURL(this.props.item.link)
                         }}
                         style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={{fontSize: 18, fontWeight: 'bold'}}>LER MAIS +</Text>
