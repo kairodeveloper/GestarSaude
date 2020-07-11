@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 import { View, Text, StyleSheet, Image, FlatList, Modal, TouchableOpacity } from 'react-native';
 import { blackSemiTransparent, textCard, white, fontColor } from "../../colors";
-import { ICONCOCAIS, ICONCLOSE } from '../../images';
+import { ICONLOWRISK, ICONMEDIUMRISK, ICONHIGHRISK, ICONCLOSE } from '../../images';
 import { getIconRegiaoById } from '../global_components/GlobalFunctions';
 
-export default class ModalForList extends Component {
+export default class ModalFatorRisco extends Component {
 
     static navigationOptions = {
         headerShown: false
@@ -18,12 +18,33 @@ export default class ModalForList extends Component {
         };
     }
 
-    formatText(stringModal) {
-        if (stringModal.length > 12) {
-            return stringModal.substring(0, 11) + "..."
+    getMessageByState(state) {
+        if (state>=10) {
+            return {
+                title: "ATENÇÃO",
+                message: "Gravidez de alto risco!"
+            }
+        } else if (state<10 && state>= 5) {
+            return {
+                title: "CUIDADO",
+                message: "Gravidez de médio risco!"
+            }
+        } else {
+            return {
+                title: "TUDO CERTO",
+                message: "Gravidez de baixo risco!"
+            }
         }
+    }
 
-        return stringModal
+    getIconByState(state) {
+        if (state>=10) {
+            return ICONHIGHRISK
+        } else if (state<10 && state>= 5) {
+            return ICONMEDIUMRISK
+        } else {
+            return ICONLOWRISK
+        }
     }
 
     render() {
@@ -32,31 +53,17 @@ export default class ModalForList extends Component {
             <View style={styles.cardContent}>
                 <View style={styles.viewTitleModal}>
                     <View style={styles.viewTitleImageModal}>
-                        <Image source={getIconRegiaoById(this.props.regiao.id)} style={styles.imageModal} />
+                        <Image source={this.getIconByState(this.props.result)} style={styles.imageModal} />
                     </View>
                     <View style={styles.viewTextImageModal}>
-                        <Text style={styles.titleModal}>{this.formatText(this.props.regiao.name)}</Text>
-                        <Text style={styles.subtitleModal}>Sede: {this.props.regiao.sede}</Text>
+                        <Text style={styles.titleModal}>{this.getMessageByState(this.props.result).title}</Text>
+                        <Text style={styles.subtitleModal}>{this.getMessageByState(this.props.result).message}</Text>
                     </View>
                     <View style={styles.viewImageCloseModal}>
                         <TouchableOpacity onPress={() => this.props.closeModal()}>
                             <Image source={ICONCLOSE} style={{ height: 25, width: 25 }} />
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View style={styles.viewContentModal}>
-                    <FlatList
-                        data={this.props.regiao.estabelecimentos}
-                        snapToAlignment={"center"}
-                        flex={1}
-                        renderItem={({ item }) =>
-                            <View style={styles.item}>
-                                <Text style={styles.titleItem}>{item.nome}</Text>
-                                <Text style={styles.subtitleItem}>{item.cidade} - {item.endereco}</Text>
-                            </View>
-                        }
-                    />
-
                 </View>
             </View>
         );
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
     },
     imageModal: {
         height: 50,
-        width: '100%'
+        width: 50
     },
     titleModal: {
         fontSize: 18,
@@ -127,4 +134,4 @@ const styles = StyleSheet.create({
     }
 });
 
-module.exports = ModalForList
+module.exports = ModalFatorRisco

@@ -4,6 +4,8 @@ export const LOGOIMAGE = require('./files/logo_gestar_saude.png')
 export const BACKGROUNDPREGNANTIMAGE = require('./files/fundo_mulher_gestante.png')
 export const BACKGROUNDPREGNANTIMAGESEMFUNDO = require('./files/fundo_mulher_gestante_sem_logo.png')
 export const MAPAPIAUI = require('./files/regioes1.png')
+export const FLUXO1 = require('./files/fluxo_1.png')
+export const FLUXO2 = require('./files/fluxo_2.png')
 export const ICONPLUS = require('./files/icons/icon_plus.png')
 export const ICONBOY = require('./files/icons/icon_boy.png')
 export const ICONGIRL = require('./files/icons/icon_girl.png')
@@ -19,6 +21,11 @@ export const ICONCLOSE = require('./files/icons/icon_close_grey.png')
 export const ICONTARGET = require('./files/icons/icon_target.png')
 export const ICONCAMERA = require('./files/icons/icon_camera.png')
 export const ICONTRASH = require('./files/icons/ic_lixo.png')
+export const ICONLOWRISK = require('./files/icons/icon_baixo_risco.png')
+export const ICONMEDIUMRISK = require('./files/icons/icon_medio_risco.png')
+export const ICONHIGHRISK = require('./files/icons/icon_alto_risco.png')
+
+
 
 /* REGIOES IMAGES */
 export const ICONALTOPARNAIBA = require('./files/icons/regioes/alto_parnaiba.png')

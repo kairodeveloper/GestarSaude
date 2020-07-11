@@ -2,7 +2,7 @@
 const Realm = require('realm');
 import { RealmSchema } from './all_schemes';
 
-let SCHEMA_VERSION = 10
+let SCHEMA_VERSION = 11
 
 function findFirstUsuario() {
     let realm = new Realm({
@@ -55,13 +55,13 @@ function findAllNotRemoved(schemaName, sort, invert, secondSort, secondInvert) {
         if (sort!==undefined) {
             if (invert!==undefined) {
                 if (secondSort!==undefined) {
-                    objectsToReturn = objectsToReturn.sorted(sort, invert).sorted(secondSort, invert)                    
+                    objectsToReturn = objectsToReturn.sorted(sort, invert).sorted(secondSort, invert)
                 } else {
                     objectsToReturn = objectsToReturn.sorted(sort, invert)
                 }
             } else {
                 if (secondSort!==undefined) {
-                    objectsToReturn = objectsToReturn.sorted(sort, false).sorted(secondSort, secondInvert)                    
+                    objectsToReturn = objectsToReturn.sorted(sort, false).sorted(secondSort, secondInvert)
                 } else {
                     objectsToReturn = objectsToReturn.sorted(sort, false)
                 }
@@ -84,7 +84,7 @@ function findLastNotRemoved(schemaName) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    })    
+    })
 
     let objects = realm.objects(schemaName).filtered("removido=false")
     let objectToReturn = objects[objects.length-1]
@@ -95,7 +95,7 @@ function findFirstNotRemoved(schemaName) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    })    
+    })
 
     let objects = realm.objects(schemaName).filtered("removido=false")
     let objectToReturn = objects[0]
@@ -106,7 +106,7 @@ function findByFilter(schemaName, filter, sort) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    })  
+    })
 
     let objects = realm.objects(schemaName)
     let objectsToReturn = objects.filtered(filter)
@@ -120,14 +120,14 @@ function findFirstByFilter(schemaName, filter, sort) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    })  
+    })
 
     let objects = realm.objects(schemaName)
     if (sort!==undefined) {
         objects = objects.sorted(sort, false)
     }
     let objectsToReturn = objects.filtered(filter)[0]
-    
+
     return objectsToReturn
 }
 
@@ -135,7 +135,7 @@ function findLastByFilter(schemaName, filter, sort) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    })  
+    })
 
     let objects = realm.objects(schemaName)
     let objectsToReturn = objects.filtered(filter)
@@ -150,7 +150,7 @@ function getNextMid(schemaName) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    });    
+    });
 
     realm.objects(schemaName).forEach(element => {
         if (element.mid>mid) {
@@ -166,13 +166,13 @@ function getMidByUUID(schemaName, uuid) {
     let realm = new Realm({
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
-    });    
+    });
 
     let filter = 'removido = false AND uuid LIKE "'+uuid+'"'
 
     let objects = realm.objects(schemaName)
     let objectsToReturn = objects.filtered(filter)
-    
+
     if (objectsToReturn.length>0) {
         return objectsToReturn[0].mid
     } else {
@@ -192,7 +192,7 @@ function saveThis(schemaName, object) {
         schemaVersion: SCHEMA_VERSION
     });
     let objectToSave = object
-    
+
     realm.write(() => {
         realm.create(schemaName, objectToSave)
     })
@@ -234,12 +234,12 @@ function deleteObjects(schemaName) {
         schema: RealmSchema,
         schemaVersion: SCHEMA_VERSION
     })
-    
+
     let objects = realm.objects(schemaName)
     realm.beginTransaction()
     realm.delete(objects)
     realm.commitTransaction()
-    
+
 }
 
 export {
