@@ -18,6 +18,7 @@ import RegistroAgendamento from "./pages/register_data/RegistroAgendamento";
 import ModuloProfissional from './pages/ModuloProfissional';
 import FluxoAtendimentoGestante from './pages/FluxoAtendimentoGestante';
 import CalculadorFatorRisco from './pages/CalculadorFatorRisco';
+import FluxoAtendimento from './pages/user_module/FluxoAtendimento';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -96,6 +97,10 @@ const RootStack = createStackNavigator({
     },
     ModuloProfissional: {
         screen: ModuloProfissional,
+        navigationOptions: navigationOptions
+    },
+    FluxoAtendimento: {
+        screen: FluxoAtendimento,
         navigationOptions: navigationOptions
     },
     FluxoAtendimentoGestante: {

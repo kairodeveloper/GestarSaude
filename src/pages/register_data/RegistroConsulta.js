@@ -149,6 +149,12 @@ export default class RegistroConsulta extends Component {
 
         if (pressao_x > 14) {
             return 2
+        } else if (pressao_x==14) {
+            if (pressao_y<9) {
+                return 1
+            } else {
+                return 2
+            }
         } else if (pressao_y < 6) {
             if (pressao_x < 9) {
                 return 3
@@ -195,7 +201,7 @@ export default class RegistroConsulta extends Component {
         consulta.anexos = filesSave
 
         if (this.state.edit) {
-            let fields = ['data', 'numero', 'nome_medico', 'anexos', 'peso', 'pressao_x', 'pressao_y', 'observacao']
+            let fields = ['data', 'numero', 'estado', 'nome_medico', 'anexos', 'peso', 'pressao_x', 'pressao_y', 'observacao']
 
             consulta.mid = this.state.consulta.mid
             updateThis('Consulta', consulta, fields)

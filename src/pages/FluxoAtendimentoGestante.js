@@ -17,7 +17,7 @@ import {
     StatusBar
 } from 'react-native'
 import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey, fontColor } from '../../colors';
-import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE, FLUXO1, FLUXO2 } from '../../images'
+import { PREGNANTIMAGE, BACKGROUNDPREGNANTIMAGE, BACKGROUNDPREGNANTIMAGESEMFUNDO, LOGOIMAGE, FLUXO1, FLUXO2, FLUXO3 } from '../../images'
 import { removeAll, isEmpty } from '../../realm_services/RealmService';
 import { saveExames } from '../global_components/GlobalFunctions';
 
@@ -67,10 +67,14 @@ export default class FluxoAtendimentoGestante extends Component {
                             </View>
                             <Text style={styles.subitemTitle}> - Assistência na Atenção Básica por médico/enfermeiro obedecendo aos critérios normativos do Ministério da Saúde.</Text>
 
-                            <Image source={FLUXO1} style={{ marginStart: 16, marginEnd: 16, marginTop: 16, alignSelf: 'center', height: Dimensions.get('screen').width, width: Dimensions.get('screen').width}} />
+                            <Image source={FLUXO1} style={{ marginStart: 16, marginEnd: 16, marginTop: 16, marginBottom: 6, alignSelf: 'center', height: Dimensions.get('screen').width, width: Dimensions.get('screen').width}} />
                             <Text style={styles.subitemTitle}>Fluxo da assistência à gestante no pré-natal, Teresina-Piauí, 2019. Fonte: SESAPI, 2019</Text>
-                            <Image source={FLUXO2} style={{ margin: 24, alignSelf: 'center', height: Dimensions.get('screen').width, width: Dimensions.get('screen').width}} />
+                            <Image source={FLUXO2} style={{ margin: 24, marginBottom: 6, alignSelf: 'center', height: Dimensions.get('screen').width, width: Dimensions.get('screen').width}} />
                             <Text style={styles.subitemTitle}>Fluxograma da gestante no processo de identificação de risco para pré-eclampsia, Teresina-PI, 2019. Fonte: SESAPI, 2019.</Text>
+
+                            <Text style={styles.itemTitle}>Rede de atenção à gestante de alto risco</Text>
+                            <Image source={FLUXO3} style={{ margin: 24, marginBottom: 6, alignSelf: 'center', height: Dimensions.get('screen').width, width: Dimensions.get('screen').width}} />
+                            <Text style={styles.subitemTitle}>Mapa do Piauí por região de saúde com estabelecimentos que realizam Parto Cesárea e Parto Vaginal. Fonte: BRASIL, 2020.</Text>
                         </View>
                     </ScrollView>
                 </View>

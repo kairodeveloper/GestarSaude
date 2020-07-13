@@ -36,7 +36,7 @@ import {
   avancarButtonLabel
 } from '../../../strings';
 import { Container, Header, Content, Tab, Tabs } from 'native-base'
-import { maskForDate, countDays } from '../../global_components/GlobalFunctions';
+import { maskForDate, countDays, getSintomas } from '../../global_components/GlobalFunctions';
 import { findAllNotRemoved, updateThis, getNextMid, saveThis, findFirstByFilter } from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
@@ -127,7 +127,7 @@ export default class UserMainPage extends Component {
             onPress={() => {
               this.setExameFeito(it.mid)
             }}
-            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: fontColor,  backgroundColor: white }}>
+            style={{ minHeight: 60, marginBottom: 16, padding: 16, borderRadius: 15, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: fontColor, backgroundColor: white }}>
             <View flex={4}>
               <Text style={{ fontSize: 24, fontWeight: 'bold', color: fontColor }}>{it.nome}</Text>
             </View>
@@ -184,7 +184,7 @@ export default class UserMainPage extends Component {
   }
 
   getSemanaGravidez() {
-    let value = countDays(this.state.gravidez.createdAt, new Date())/7
+    let value = countDays(this.state.gravidez.createdAt, new Date()) / 7
     if (value < 1) {
       return this.state.gravidez.semana
     } else {
@@ -195,128 +195,128 @@ export default class UserMainPage extends Component {
 
   render() {
     let modal = <Modal
-                  animationType="slide"
-                  visible={this.state.showModalExame}
-                  transparent>
-                  <View style={styles.containerModal}>
-                    <View style={styles.viewContentModal}>
-                      <View style={{
-                        flex: 4,
-                        margin: 10
-                      }}>
-                        <View style={{justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row'}}>
-                          <Text style={{fontSize: 18, fontWeight: 'bold', color: fontColor}}>Novo exame</Text>
-                          <TouchableOpacity onPress={() => {
-                            this.setState({
-                              showModalExame: false
-                            })
-                          }}>
-                            <Image source={ICONCLOSE} style={{height: 20, width: 20}} />
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{marginTop: 6, justifyContent: 'center'}}>
-                          <Text style={{fontSize: 16, color: fontColor}}>Selecione o trimestre</Text>
-                          <View style={{height: 50, flexDirection: 'row'}}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  trimestreSelecionado: 1
-                                })
-                              }}
-                              style={[
-                                this.state.trimestreSelecionado==1 ? (
-                                  styles.buttonTrimestreSelecionado
-                                 ) : (
-                                  styles.buttonTrimestre
-                                 ),
-                                 { marginEnd: 6 }]
-                            }>
-                            <Text style={this.state.trimestreSelecionado==1 ?
-                                (
-                                  styles.textTrimestreSelecionado
-                                ) : (
-                                  styles.textTrimestre
-                                )
-                            }>1º</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  trimestreSelecionado: 2
-                                })
-                              }}
-                              style={[
-                                this.state.trimestreSelecionado==2 ? (
-                                  styles.buttonTrimestreSelecionado
-                                 ) : (
-                                  styles.buttonTrimestre
-                                 ),
-                                 { marginEnd: 6 }]
-                            }>
+      animationType="slide"
+      visible={this.state.showModalExame}
+      transparent>
+      <View style={styles.containerModal}>
+        <View style={styles.viewContentModal}>
+          <View style={{
+            flex: 4,
+            margin: 10
+          }}>
+            <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: fontColor }}>Novo exame</Text>
+              <TouchableOpacity onPress={() => {
+                this.setState({
+                  showModalExame: false
+                })
+              }}>
+                <Image source={ICONCLOSE} style={{ height: 20, width: 20 }} />
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: 6, justifyContent: 'center' }}>
+              <Text style={{ fontSize: 16, color: fontColor }}>Selecione o trimestre</Text>
+              <View style={{ height: 50, flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      trimestreSelecionado: 1
+                    })
+                  }}
+                  style={[
+                    this.state.trimestreSelecionado == 1 ? (
+                      styles.buttonTrimestreSelecionado
+                    ) : (
+                        styles.buttonTrimestre
+                      ),
+                    { marginEnd: 6 }]
+                  }>
+                  <Text style={this.state.trimestreSelecionado == 1 ?
+                    (
+                      styles.textTrimestreSelecionado
+                    ) : (
+                      styles.textTrimestre
+                    )
+                  }>1º</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      trimestreSelecionado: 2
+                    })
+                  }}
+                  style={[
+                    this.state.trimestreSelecionado == 2 ? (
+                      styles.buttonTrimestreSelecionado
+                    ) : (
+                        styles.buttonTrimestre
+                      ),
+                    { marginEnd: 6 }]
+                  }>
 
-                            <Text style={this.state.trimestreSelecionado==2 ?
-                                (
-                                  styles.textTrimestreSelecionado
-                                ) : (
-                                  styles.textTrimestre
-                                )
-                            }>2º</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  trimestreSelecionado: 3
-                                })
-                              }}
-                              style={[
-                                this.state.trimestreSelecionado==3 ? (
-                                  styles.buttonTrimestreSelecionado
-                                 ) : (
-                                  styles.buttonTrimestre
-                                 ),
-                                 { marginStart: 6 }]
-                            }>
-                              <Text style={this.state.trimestreSelecionado==3 ?
-                                  (
-                                    styles.textTrimestreSelecionado
-                                  ) : (
-                                    styles.textTrimestre
-                                  )
-                              }>3º</Text>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                        <View style={{marginTop: 6, minHeight: 50, justifyContent: 'center'}}>
-                          <Text style={styles.textOverField}>{nomeCompletoLabel}</Text>
-                          <View style={styles.containerTextInput}>
-                            <TextInput
-                              textColor={black}
-                              tintColor={black}
-                              baseColor={black}
-                              value={this.state.nameExame}
-                              style={styles.text}
-                              placeholder={nomeCompletoPlaceholder}
-                              onChangeText={(nameExame) => this.setState({ nameExame })}
-                            />
-                          </View>
-                        </View>
-                      </View>
-                      <View style={styles.viewForButton}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.saveExame()
-                          }}
-                          style={styles.styleButton}>
-                          <Text style={styles.textForButton}>SALVAR</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-                  </Modal>
+                  <Text style={this.state.trimestreSelecionado == 2 ?
+                    (
+                      styles.textTrimestreSelecionado
+                    ) : (
+                      styles.textTrimestre
+                    )
+                  }>2º</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      trimestreSelecionado: 3
+                    })
+                  }}
+                  style={[
+                    this.state.trimestreSelecionado == 3 ? (
+                      styles.buttonTrimestreSelecionado
+                    ) : (
+                        styles.buttonTrimestre
+                      ),
+                    { marginStart: 6 }]
+                  }>
+                  <Text style={this.state.trimestreSelecionado == 3 ?
+                    (
+                      styles.textTrimestreSelecionado
+                    ) : (
+                      styles.textTrimestre
+                    )
+                  }>3º</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{ marginTop: 6, minHeight: 50, justifyContent: 'center' }}>
+              <Text style={styles.textOverField}>{nomeCompletoLabel}</Text>
+              <View style={styles.containerTextInput}>
+                <TextInput
+                  textColor={black}
+                  tintColor={black}
+                  baseColor={black}
+                  value={this.state.nameExame}
+                  style={styles.text}
+                  placeholder={nomeCompletoPlaceholder}
+                  onChangeText={(nameExame) => this.setState({ nameExame })}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.viewForButton}>
+            <TouchableOpacity
+              onPress={() => {
+                this.saveExame()
+              }}
+              style={styles.styleButton}>
+              <Text style={styles.textForButton}>SALVAR</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
 
     return (
       <View style={styles.safeView}>
-        {modal}        
+        {modal}
         <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
 
 
@@ -336,7 +336,7 @@ export default class UserMainPage extends Component {
                 tabStyle={{ backgroundColor: colorPrimary }}>
 
                 <View style={styles.containerTabs}>
-                  <Text style={styles.titleTab1}>Acompanhe aqui sua evolução</Text>
+                  <Text style={styles.titlePage}>Acompanhe aqui sua evolução</Text>
                   <View style={{ flex: 1, marginTop: 16 }}>
 
                     <FlatList
@@ -358,7 +358,7 @@ export default class UserMainPage extends Component {
                             <Text style={{ color: fontColor }}>{maskForDate(item.data)}</Text>
                           </View>
                           <View style={{ minHeight: 50, paddingStart: 6, justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 24, color: fontColor }}>Peso: {item.peso}kg, Pressão: {item.pressao_x }/{item.pressao_y }</Text>
+                            <Text style={{ fontSize: 24, color: fontColor }}>Peso: {item.peso}kg, Pressão: {item.pressao_x}/{item.pressao_y}</Text>
                           </View>
                           <View style={{ height: 25, paddingStart: 6, paddingEnd: 6, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ color: fontColor }}>Estado: {this.getEstadoByCodigo(item.estado)}</Text>
@@ -397,7 +397,7 @@ export default class UserMainPage extends Component {
                         onPress={() => {
                           this.setState({
                             showTrimestre1: !this.state.showTrimestre1,
-                            rotationT1: this.state.rotationT1==='180deg' ? '0deg' : '180deg'
+                            rotationT1: this.state.rotationT1 === '180deg' ? '0deg' : '180deg'
                           })
                         }}
                         style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
@@ -405,19 +405,19 @@ export default class UserMainPage extends Component {
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT1 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
 
-                      { this.state.showTrimestre1 ? (
+                      {this.state.showTrimestre1 ? (
                         <View style={{ paddingStart: 16, paddingEnd: 16, paddingTop: 16, flexDirection: 'column' }}>
                           {this.getTableByTrimestre(1)}
                         </View>
                       ) : (
-                        <View />
-                      ) }
+                          <View />
+                        )}
 
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({
                             showTrimestre2: !this.state.showTrimestre2,
-                            rotationT2: this.state.rotationT2==='180deg' ? '0deg' : '180deg'
+                            rotationT2: this.state.rotationT2 === '180deg' ? '0deg' : '180deg'
                           })
                         }}
                         style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
@@ -425,19 +425,19 @@ export default class UserMainPage extends Component {
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT2 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
 
-                      { this.state.showTrimestre2 ? (
+                      {this.state.showTrimestre2 ? (
                         <View style={{ paddingStart: 16, paddingEnd: 16, paddingTop: 16, flexDirection: 'column' }}>
                           {this.getTableByTrimestre(2)}
                         </View>
                       ) : (
-                        <View />
-                      ) }
+                          <View />
+                        )}
 
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({
                             showTrimestre3: !this.state.showTrimestre3,
-                            rotationT3: this.state.rotationT3==='180deg' ? '0deg' : '180deg'
+                            rotationT3: this.state.rotationT3 === '180deg' ? '0deg' : '180deg'
                           })
                         }}
                         style={{ height: 60, paddingStart: 16, paddingEnd: 16, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: blackSemiTransparent, backgroundColor: white }}>
@@ -445,31 +445,61 @@ export default class UserMainPage extends Component {
                         <Image source={ICONDOWN} style={{ transform: [{ rotate: this.state.rotationT3 }], height: 24, width: 24 }} />
                       </TouchableOpacity>
 
-                      { this.state.showTrimestre3 ? (
+                      {this.state.showTrimestre3 ? (
                         <View style={{ paddingStart: 16, paddingEnd: 16, paddingTop: 16, flexDirection: 'column' }}>
                           {this.getTableByTrimestre(3)}
                         </View>
                       ) : (
-                        <View />
-                      ) }
+                          <View />
+                        )}
 
                     </View>
                   </ScrollView>
                   <View style={{ height: 92, marginStart: 16, marginEnd: 16, justifyContent: 'center' }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({
-                              showModalExame: true
-                            })
-                          }}
-                          style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>NOVO EXAME</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          showModalExame: true
+                        })
+                      }}
+                      style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary }}>
+                      <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>NOVO EXAME</Text>
+                    </TouchableOpacity>
 
-                      </View>
+                  </View>
 
                 </View>
               </Tab>
+              <Tab heading="Sintomas"
+                activeTextStyle={{ color: white }}
+                activeTabStyle={{ backgroundColor: colorPrimaryDark }}
+                textStyle={{ color: white }}
+                tabStyle={{ backgroundColor: colorPrimary }}>
+                <View style={styles.containerTabs}>
+                  <ScrollView>
+                    <Text style={styles.titlePage}>Sinais e sintomas de alerta</Text>
+                    <Text style={styles.subtitlePage}>
+                      Ao apresentar algum desses sintomas, entre em contato com os profissionais da sua Unidade de Saúde da Família, a Maternidade mais próxima ou um serviço de Emergência
+                      </Text>
+                      {getSintomas(1).map((item) => {
+                            return (<View style={styles.cardData}>
+                                <Text style={styles.itemTitle}>{item.name}</Text>
+                                <Text style={styles.subitemTitle}>{item.content}</Text>
+                            </View>)
+                        })}
+                    <View style={{height: 16}} />
+                    <Text style={styles.titlePage}>ATENÇÃO:</Text>
+                    {getSintomas(2).map((item) => {
+                            return (<View style={styles.cardData}>
+                                <Text style={styles.itemTitle}>{item.name}</Text>
+                                <Text style={styles.subitemTitle}>{item.content}</Text>
+                            </View>)
+                        })}
+
+                  </ScrollView>
+                </View>
+              </Tab>
+
               <Tab heading="Ajuda"
                 activeTextStyle={{ color: white }}
                 activeTabStyle={{ backgroundColor: colorPrimaryDark }}
@@ -487,17 +517,24 @@ export default class UserMainPage extends Component {
                     </TouchableOpacity>
                     */}
                     <TouchableOpacity
-                        onPress={() => {
-                          this.props.navigation.navigate('ConsultationSchedules')
-                        }}
-                        style={styles.buttonStyle}>
+                      onPress={() => {
+                        this.props.navigation.navigate('ConsultationSchedules')
+                      }}
+                      style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Consultas Agendadas</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate('FluxoAtendimento')
+                      }}
+                      style={styles.buttonStyle}>
+                      <Text style={styles.textButton}>Fluxo de atendimento</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
                         this.props.navigation.navigate('RedeAtendimentoPage')
                       }}
-                     style={styles.buttonStyle}>
+                      style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Rede de atendimento de alto risco a gestante no Piauí</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -511,7 +548,7 @@ export default class UserMainPage extends Component {
                       onPress={() => {
                         this.props.navigation.navigate('Contatos')
                       }}
-                     style={styles.buttonStyle}>
+                      style={styles.buttonStyle}>
                       <Text style={styles.textButton}>Contatos para ajuda</Text>
                     </TouchableOpacity>
                   </ScrollView>
@@ -649,5 +686,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: white
+  },
+  titlePage: {
+    fontSize: 24,
+    color: fontColor,
+    fontWeight: 'bold'
+  },
+  chapterTitle: {
+    fontSize: 20,
+    color: fontColor,
+    fontWeight: 'bold',
+    marginTop: 16
+  },
+  itemTitle: {
+    fontSize: 18,
+    color: fontColor,
+    fontWeight: 'bold',
+    marginTop: 16
+  },
+  subitemTitle: {
+    fontSize: 16,
+    color: fontColor,
+    marginStart: 6,
+    textAlign: 'justify'
+  },
+  subtitlePage: {
+    fontSize: 18,
+    color: fontColor,
+    textAlign: 'justify'
+  },
+  cardData: {
+    minHeight: 50,
+    borderBottomWidth: 0.5,
+    borderColor: blackSemiTransparent,
+    alignItems: 'flex-start',
+    padding: 16
   }
 });
