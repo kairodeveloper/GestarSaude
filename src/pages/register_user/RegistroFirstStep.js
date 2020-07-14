@@ -34,6 +34,7 @@ import {
   numCasaPlaceholder,
   avancarButtonLabel
 } from '../../../strings';
+import { findFirstByFilter } from '../../../realm_services/RealmService';
 
 export default class RegistroFirstStep extends Component {
 
@@ -43,14 +44,42 @@ export default class RegistroFirstStep extends Component {
 
   constructor(props) {
     super(props)
+    const { navigation } = this.props
+
+    let is_edit = navigation.getParam('is_edit', 0)
+
+    let nome = ""
+    let idade = ""
+    let cep = ""
+    let bairro = ""
+    let logradouro = ""
+    let num_casa = ""
+    let usuario = {}
+    let edit = false
+
+    if (is_edit==1) {
+      usuario = findFirstByFilter('Usuario', 'removido = false')
+
+      nome = usuario.nome
+      idade = usuario.idade.toString()
+      cep = usuario.cep
+      bairro = usuario.bairro
+      logradouro = usuario.logradouro
+      num_casa = usuario.num_casa.toString()
+
+      edit = true
+    }
+
 
     this.state = {
-      nome: "",
-      idade: "",
-      cep: "",
-      bairro: "",
-      logradouro: "",
-      num_casa: ""
+      nome: nome,
+      idade: idade,
+      cep: cep,
+      bairro: bairro,
+      logradouro: logradouro,
+      num_casa: num_casa,
+      usuario: usuario,
+      edit: edit
     }
   }
 
@@ -59,7 +88,7 @@ export default class RegistroFirstStep extends Component {
       <View style={styles.safeView}>
         <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView keyboardShouldPersistTaps={'handled'}>
           <View style={styles.containerContent}>
             <Text style={styles.saudacaoStyle}>{saudacaoStep1}</Text>
             <Text style={styles.textOverField}>{nomeCompletoLabel}</Text>
@@ -187,7 +216,7 @@ export default class RegistroFirstStep extends Component {
                   user.logradouro = this.state.logradouro
                   user.num_casa = this.state.num_casa
   
-                  this.props.navigation.navigate('RegistroSecondStep', {user: user})  
+                  this.props.navigation.navigate('RegistroSecondStep', {user: user, edit: this.state.edit, usuario: this.state.usuario})  
                 }
               }}
               style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 24 }}>

@@ -1,7 +1,10 @@
+import React from 'react'
+import { Text } from 'react-native'
+
 import { getNextMid, saveThis, isEmpty } from "../../realm_services/RealmService";
-import { func } from "prop-types";
 import { ICONLITORAL, ICONCOCAIS, ICONENTRERIOS, ICONCARNAUBAIS, ICONSAMBITO, ICONALTOPARNAIBA, ICONMANGABEIRAS, ICONITAUEIRAS, ICONCANINDE, ICONCAPIVARA, ICONGUARIBAS } from "../../images";
 import Notification from "../services/Notification";
+import { red } from "../../colors";
 
 function maskForDate(date) {
     let retorno = ""
@@ -373,7 +376,7 @@ function getDefinicoes(quadro) {
         {
             name: 'Uso da aspirina 2', 
             quadro: 4,
-            description: 'Um outro estudo, mostraram que a dose baixa de aspirina iniciada com menos de ou igual a 16 semanas de gestação em mulheres com risco de EP teve uma redução substancial na taxa de PE. No entanto, a aspirina iniciada após 16 semanas de gestação não diminuiu a taxa de EP. A administração de aspirina em baixa dose (50–150 mg / d) com menor ou igual a 16 semanas de gestação em mulheres com risco de EP teve uma redução significativa na EP, em particular EP prematuro. Além disso, destacaram que os benefícios adicionais da profilaxia precoce com aspirina incluem uma redução de 60% no risco de morte perinatal. Esses resultados estimularam a necessidade de um estudo randomizado prospectivo para avaliar o potencial benefício da aspirina na prevenção da EP.',
+            description: 'Um outro estudo, mostrou que a dose baixa de aspirina iniciada com menos de ou igual a 16 semanas de gestação em mulheres com risco de EP teve uma redução substancial na taxa de PE. No entanto, a aspirina iniciada após 16 semanas de gestação não diminuiu a taxa de EP. A administração de aspirina em baixa dose (50–150 mg / d) com menor ou igual a 16 semanas de gestação em mulheres com risco de EP teve uma redução significativa na EP, em particular EP prematuro. Além disso, destacaram que os benefícios adicionais da profilaxia precoce com aspirina incluem uma redução de 60% no risco de morte perinatal. Esses resultados estimularam a necessidade de um estudo randomizado prospectivo para avaliar o potencial benefício da aspirina na prevenção da EP.',
             link: 'https://www.ajog.org/article/S0002-9378(17)32326-8/abstract'
         }
     ];
@@ -391,75 +394,121 @@ function getSintomas(type) {
     let data = type==1 ? [
         {
             name: "Síndromes hemorrágicas (sangramento):",
-            content: "independentemente da idade gestacional."
+            content: "independentemente da idade gestacional.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Cefaleia (dor de cabeça):",
-            content: "crises convulsivas"
+            content: "crises convulsivas",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Pressão arterial:",
-            content: "acima do seu padrão normal."
+            content: "acima do seu padrão normal.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Amniorrexe prematura:",
-            content: "perda de líquido vaginal (consistência líquida, em pequena ou grande quantidade, mas de forma persistente)."
+            content: "perda de líquido vaginal (consistência líquida, em pequena ou grande quantidade, mas de forma persistente).",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Anemia grave:",
-            content: "hemoglobina {"<"} 8."
+            content: "hemoglobina < 8.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Trabalho de parto prematuro:",
-            content: "contrações e modificação de colo uterino em gestantes com menos de 36 semanas."
+            content: "contrações e modificação de colo uterino em gestantes com menos de 36 semanas.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Hipertermia:",
-            content: "(Temperatura corporal {">"} = 37,8C), na ausência de sinais ou sintomas clínicos."
+            content: "(Temperatura corporal >= 37,8Cº), na ausência de sinais ou sintomas clínicos.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Suspeita de trombose venosa profunda em gestantes:",
-            content: "dor no membro inferior, edema localizado e/ou varicosidade aparente."
+            content: "dor no membro inferior, edema localizado e/ou varicosidade aparente.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Vômitos incoercíveis:",
-            content: "não responsivos ao tratamento, com comprometimento sistêmico com menos de 20 semanas."
+            content: "não responsivos ao tratamento, com comprometimento sistêmico com menos de 20 semanas.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Vômitos inexplicáveis no 3º trimestre",
-            content: "-"
+            content: "-",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Crise aguda de asma",
-            content: "-"
+            content: "-",
+            valueOnly: "",
+            content2: ""
         }
     ] : [
         {
             name: "Edema (inchaço):",
-            content: "apenas edema de tornozelo, sem hipertensão (pressão alta) ou aumento súbito de peso: Verifique se o edema está relacionado à postura, ao fim do dia, ao aumento da temperatura ou ao tipo de calçado."
+            content: "apenas edema de tornozelo, sem hipertensão (pressão alta) ou aumento súbito de peso: Verifique se o edema está relacionado à postura, ao fim do dia, ao aumento da temperatura ou ao tipo de calçado.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Edema limitado aos membros inferiores:",
-            content: "porém na presença de hipertensão ou ganho de peso: repouso em decúbito lateral esquerdo. Necessária avaliação clínica. Marque retorno em sete dias, na ausência de sintomas. A gestante deve ser avaliada e acompanhada pelo médico da unidade, de acordo com o calendário de rotina. Caso haja hipertensão, a gestante deve ser encaminhada para um serviço de alto risco."
+            content: "porém na presença de hipertensão ou ganho de peso: repouso em decúbito lateral esquerdo. Necessária avaliação clínica. Marque retorno em sete dias, na ausência de sintomas. A gestante deve ser avaliada e acompanhada pelo médico da unidade, de acordo com o calendário de rotina. Caso haja hipertensão, a gestante deve ser encaminhada para um serviço de alto risco.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Edema generalizado (face, tronco e membros):",
-            content: "ou que já se mostra presente quando a gestante acorda, acompanhado ou não de hipertensão ou aumento súbito de peso."
+            content: "ou que já se mostra presente quando a gestante acorda, acompanhado ou não de hipertensão ou aumento súbito de peso.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Gestante de risco em virtude de suspeita de pré-eclâmpsia ou outras intercorrências:",
-            content: "A gestante deve ser avaliada pelo médico da unidade e encaminhada para serviço de alto risco."
+            content: "A gestante deve ser avaliada pelo médico da unidade e encaminhada para serviço de alto risco.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Edema unilateral de membros inferiores, com dor e/ou sinais flogísticos (dor, calor, vermelhidão):",
-            content: "Suspeita de processos trombóticos. A gestante deve ser avaliada pelo médico da unidade e encaminhada para o serviço de alto risco."
+            content: "Suspeita de processos trombóticos. A gestante deve ser avaliada pelo médico da unidade e encaminhada para o serviço de alto risco.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Pressão arterial (PA):",
-            content: "Níveis de PA conhecidos e normais antes da gestação: Manutenção dos mesmos níveis de PA;"
+            content: "Níveis de PA conhecidos e normais antes da gestação: Manutenção dos mesmos níveis de PA;",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Níveis tensionais normais:",
-            content: "Mantenha o calendário habitual;\nCuide da alimentação;\nPratique atividade física regularmente."
+            content: "Mantenha o calendário habitual;\nCuide da alimentação;\nPratique atividade física regularmente.",
+            valueOnly: "",
+            content2: ""
         }, {
             name: "Níveis de PA desconhecidos antes da gestação:",
-            content: "Valores da pressão < 140/90mmHg: Considere o aumento dos níveis tensionais em relação aos níveis anteriores à gestação: Diminua a ingestão de sal; aumente a ingestão hídrica; pratique atividade física regularmente. "
+            content: "Valores da pressão ",
+            valueOnly: "140/90mmHg",
+            content2: ": Considere o aumento dos níveis tensionais em relação aos níveis anteriores à gestação: Diminua a ingestão de sal; aumente a ingestão hídrica; pratique atividade física regularmente. "
         }, {
             name: "Níveis de PA conhecidos e normais antes da gestação:",
-            content: "Aumento da PA, mantendo nível < 140/90mmHg: Sinal de alerta - Diminua a ingestão de sal; aumente a ingestão hídrica; pratique atividade física regularmente; agende controles mais próximos."
+            content: "Aumento da PA, mantendo nível ",
+            valueOnly: "< 140/90mmHg: Sinal de alerta",
+            content2: " - Diminua a ingestão de sal; aumente a ingestão hídrica; pratique atividade física regularmente; agende controles mais próximos."
         }, {
             name: "Níveis de PA conhecidos ou desconhecidos antes da gestação: ",
-            content: "Valores da PA > 140/90mmHg e < 160/110, sem sintomas e sem ganho ponderal maior do que 500g semanais: Considere HAS na gestação - Atente para a possibilidade de erro de cálculo da idade gestacional (IG); Realize proteinúria (teste rápido); A gestante deve ser avaliada pelo médico da unidade, realizar ultrassonografia, se possível; Caso permaneça dúvida, retorno em 15 dias para reavaliação ou, se possível, a gestante será encaminhada para o serviço de alto risco."
+            content: "Valores da PA ",
+            valueOnly: "> 140/90mmHg e < 160/110",
+            content2: ", sem sintomas e sem ganho ponderal maior do que 500g semanais: Considere HAS na gestação - Atente para a possibilidade de erro de cálculo da idade gestacional (IG); Realize proteinúria (teste rápido); A gestante deve ser avaliada pelo médico da unidade, realizar ultrassonografia, se possível; Caso permaneça dúvida, retorno em 15 dias para reavaliação ou, se possível, a gestante será encaminhada para o serviço de alto risco."
         }, {
             name: "Níveis de PA conhecidos ou desconhecidos antes da gestação: ",
-            content: "Valores de PA > 140/90mmHg, proteinúria (teste rápido) positiva e/ou com sintomas clínicos (dor de cabeça, dor no estômago, escotomas (diminuição parcial ou total da capacidade de enxergar), reflexos tendíneos aumentados) ou paciente assintomática, porém com níveis de PA > 160/110mmHg - Paciente com suspeita de pré-eclâmpsia grave. Deve-se referir imediatamente a gestante ao pré-natal de alto risco e/ou à unidade de referência hospitalar."
+            content: "Valores de ",
+            valueOnly: "PA > 140/90mmHg",
+            content2: ", proteinúria (teste rápido) positiva e/ou com sintomas clínicos (dor de cabeça, dor no estômago, escotomas (diminuição parcial ou total da capacidade de enxergar), reflexos tendíneos aumentados) ou paciente assintomática, porém com níveis de PA > 160/110mmHg - Paciente com suspeita de pré-eclâmpsia grave. Deve-se referir imediatamente a gestante ao pré-natal de alto risco e/ou à unidade de referência hospitalar."
         }, {
             name: "Paciente com hipertensão arterial crônica, moderada ou grave, ou em uso de medicação anti-hipertensiva:",
-            content: "Paciente de risco - Deve-se referir a gestante ao pré-natal de alto risco."
+            content: "Paciente de risco - Deve-se referir a gestante ao pré-natal de alto risco.",
+            valueOnly: "",
+            content2: ""
         }
     ]
 

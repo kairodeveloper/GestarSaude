@@ -46,21 +46,21 @@ export default class RegistroSecondStep extends Component {
         super(props)
         const { navigation } = this.props
 
+        let edit = navigation.getParam('edit', false)
+        let usuario = navigation.getParam('usuario', {})
         let user = navigation.getParam('user', {})
+        
+        let cartao_sus = ""
 
-        let ubses = []
-
-        for (let index = 0; index < 10; index++) {
-            const element = {}
-            element.nome = "UBS " + index
-
-            ubses.push(element)
+        if (edit) {
+            cartao_sus = usuario.cartao_sus
         }
 
         this.state = {
-            ubses: ubses,
             user: user,
-            cartao_sus: ""
+            cartao_sus: cartao_sus,
+            edit: edit,
+            usuario: usuario
         }
     }
 
@@ -69,7 +69,7 @@ export default class RegistroSecondStep extends Component {
             <View style={styles.safeView}>
                 <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
                 <View style={styles.container}>
-                    <ScrollView>
+                    <ScrollView keyboardShouldPersistTaps={'handled'}>
                         <View style={styles.containerContent}>
                             <Text style={styles.saudacaoStyle}>{saudacaoStep2}</Text>
 
@@ -119,9 +119,9 @@ export default class RegistroSecondStep extends Component {
                             <TouchableOpacity
                                 onPress={() => {
                                     let user = this.state.user
-                      
+                                    
                                     user.cartao_sus = this.state.cartao_sus
-                                    this.props.navigation.navigate('RegistroThirdStep', { user: user })
+                                    this.props.navigation.navigate('RegistroThirdStep', { user: user, edit: this.state.edit, usuario: this.state.usuario })
                                 }}
                                 style={{ height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 25, backgroundColor: colorPrimary, marginTop: 16 }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: white }}>{avancarButtonLabel}</Text>

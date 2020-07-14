@@ -2,7 +2,7 @@
 const Realm = require('realm');
 import { RealmSchema } from './all_schemes';
 
-let SCHEMA_VERSION = 11
+let SCHEMA_VERSION = 12
 
 function findFirstUsuario() {
     let realm = new Realm({

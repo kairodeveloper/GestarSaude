@@ -24,6 +24,7 @@ export const RealmSchema = [
             peso: { type: 'double', default: 0 },
             nome_bebe: { type: 'string', default: '' },
             sexo_bebe: { type: 'bool', default: false},
+            dpp: { type: 'date', default: Date() },
             createdAt: { type: 'date', default: Date() },
             removido: { type: 'bool', default: false }
         }

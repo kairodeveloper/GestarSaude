@@ -22,8 +22,9 @@ import {
     saudacaoStep3
 } from '../../../strings';
 import { NavigationActions, StackActions } from 'react-navigation';
-import { getNextMid, saveThis } from '../../../realm_services/RealmService'
+import { getNextMid, saveThis, findFirstByFilter, updateThis } from '../../../realm_services/RealmService'
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-datepicker'
 
 export default class RegistroThirdStep extends Component {
 
@@ -35,14 +36,39 @@ export default class RegistroThirdStep extends Component {
         super(props)
         const { navigation } = this.props
 
+        let edit = navigation.getParam('edit', false)
+        let usuario = navigation.getParam('usuario', {})
         let user = navigation.getParam('user', {})
+ 
+        let gravidez = {}
+
+        let semana = ""
+        let date = new Date()
+        let peso = ""
+        let nome_bebe = ""
+        let is_male = false
+
+        if (edit) {
+            gravidez = findFirstByFilter('Gravidez', 'removido = false')
+            
+            semana = gravidez.semana.toString()
+            date = gravidez.dpp
+            peso = gravidez.peso.toString()
+            nome_bebe = gravidez.nome_bebe
+            is_male = gravidez.is_male
+        }
 
         this.state = {
             user: user,
-            semana: "",
-            peso: "",
-            nome_bebe: "",
-            is_male: false
+            semana: semana,
+            date: date,
+            dateHasChange: false,
+            peso: peso,
+            nome_bebe: nome_bebe,
+            is_male: is_male,
+            edit: edit,
+            usuario: usuario,
+            gravidez: gravidez
         }
     }
 
@@ -51,7 +77,7 @@ export default class RegistroThirdStep extends Component {
             <View style={styles.safeView}>
                 <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
                 <View style={styles.container}>
-                    <ScrollView>
+                    <ScrollView keyboardShouldPersistTaps={'handled'}>
                         <View style={styles.containerContent}>
                             <Text style={styles.saudacaoStyle}>{saudacaoStep3}</Text>
 
@@ -70,7 +96,41 @@ export default class RegistroThirdStep extends Component {
                                     />
                                 </View>
                             </View>
-
+                            <Text style={styles.textOverField}>Data de previsão do parto</Text>
+                            <View style={{ height: 50, flexDirection: 'row' }}>
+                                <DatePicker
+                                    style={{ marginTop: 6, color: black, flex: 1 }}
+                                    date={this.state.date} //initial date from state
+                                    mode="date" //The enum of date, datetime and time
+                                    format="DD/MM/YYYY"
+                                    minDate="01-01-2000"
+                                    maxDate="31-12-2100"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            display: 'none',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            height: 50,
+                                            alignItems: 'flex-start',
+                                            justifyContent: 'center',
+                                            backgroundColor: white,
+                                            padding: 16,
+                                            borderRadius: 15,
+                                            borderWidth: 1,
+                                            borderColor: fontColor,
+                                            color: black
+                                        }
+                                    }}
+                                    onDateChange={(date) => {
+                                        this.setState({ date: date, dateHasChange: true })
+                                    }}
+                                />
+                            </View>
                             <Text style={styles.textOverField}>Qual seu peso atual?</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={[styles.containerTextInput, { marginEnd: 8 }]}>
@@ -149,7 +209,6 @@ export default class RegistroThirdStep extends Component {
 
                                     if (goOn) {
                                         let usuario = {}
-                                        usuario.mid = getNextMid('Usuario')
                                         usuario.nome = user.nome
                                         usuario.idade = parseInt(user.idade)
                                         usuario.cep = user.cep
@@ -157,20 +216,42 @@ export default class RegistroThirdStep extends Component {
                                         usuario.logradouro = user.logradouro
                                         usuario.num_casa = user.num_casa
                                         usuario.cartao_sus = user.cartao_sus
-                                        usuario.createdAt = new Date()
                                         usuario.removido = false
 
                                         let gravidez = {}
-                                        gravidez.mid = getNextMid('Gravidez')
                                         gravidez.semana = parseInt(this.state.semana, 10)
                                         gravidez.peso = parseFloat(this.state.peso)
                                         gravidez.nome_bebe = this.state.nome_bebe
                                         gravidez.sexo_bebe = this.state.is_male
-                                        gravidez.createdAt = new Date()
                                         gravidez.removido = false
 
-                                        saveThis('Usuario', usuario)
-                                        saveThis('Gravidez', gravidez)
+                                        if (this.state.dateHasChange) {
+                                            let date = this.state.date.split("/")
+                                            let dateD = new Date()
+                                            dateD.setFullYear(parseInt(date[2], 10), parseInt(date[1], 10) - 1, parseInt(date[0], 10))
+                                            gravidez.dpp = dateD
+                                        } else {
+                                            gravidez.dpp = this.state.date
+                                        }                                
+
+                                        if (this.state.edit) {
+                                            let fieldsUsuario = [ "nome", "idade", "cep", "bairro", "logradouro", "num_casa", "cartao_sus", "removido" ]
+                                            let fieldsGravidez = [ "semana", "peso", "nome_bebe", "sexo_bebe", "dpp", "removido" ]
+
+                                            usuario.mid = this.state.usuario.mid
+                                            gravidez.mid = this.state.gravidez.mid
+
+                                            updateThis('Usuario', usuario, fieldsUsuario)
+                                            updateThis('Gravidez', gravidez, fieldsGravidez)
+                                        } else {
+                                            usuario.mid = getNextMid('Usuario')
+                                            usuario.createdAt = new Date()
+                                            saveThis('Usuario', usuario)
+
+                                            gravidez.mid = getNextMid('Gravidez')
+                                            gravidez.createdAt = new Date()
+                                            saveThis('Gravidez', gravidez)    
+                                        }
 
                                         const resetAction = StackActions.reset({
                                             index: 0,

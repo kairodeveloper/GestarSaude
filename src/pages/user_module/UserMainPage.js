@@ -1,49 +1,76 @@
 import React, { Component } from 'react'
 import {
-  Animated,
   StyleSheet,
   ScrollView,
   View,
   Text,
   TextInput,
-  Alert,
   Image,
-  Dimensions,
-  ToastAndroid,
   Modal,
   TouchableOpacity,
-  ImageBackground,
-  Platform,
   StatusBar,
   FlatList
 } from 'react-native'
-import { colorPrimaryDark, colorPrimary, colorBrown, colorFundo, black, colorFundoSemiTransparente, blackSemiTransparent, white, colorGrey, fontColor, colorButtons, colorGreenDark } from '../../../colors';
-import { ICONUP, ICONDOWN, ICONCHECKED, ICONCALENDAR, ICONHEARTSAUDAVEL, ICONHEARTRISCO, ICONCLOSE } from '../../../images'
+import { 
+  colorPrimaryDark, 
+  colorPrimary, 
+  colorFundo, 
+  black, 
+  blackSemiTransparent, 
+  white, 
+  fontColor, 
+  red 
+} from '../../../colors';
+import { 
+  ICONDOWN, 
+  ICONCHECKED, 
+  ICONHEARTSAUDAVEL, 
+  ICONHEARTRISCO, 
+  ICONCLOSE, 
+  ICONGIRL,
+  ICONEDIT
+} from '../../../images'
 import {
-  cepPlaceholder,
-  saudacaoStep1,
   nomeCompletoLabel,
-  nomeCompletoPlaceholder,
-  cepLabel,
-  idadePlaceholder,
-  idadeLabel,
-  bairroLabel,
-  bairroPlaceholder,
-  logradouroLabel,
-  numCasaLabel,
-  logradouroPlaceholder,
-  numCasaPlaceholder,
-  avancarButtonLabel
+  nomeCompletoPlaceholder
 } from '../../../strings';
-import { Container, Header, Content, Tab, Tabs } from 'native-base'
-import { maskForDate, countDays, getSintomas } from '../../global_components/GlobalFunctions';
-import { findAllNotRemoved, updateThis, getNextMid, saveThis, findFirstByFilter } from '../../../realm_services/RealmService';
+import { 
+  Container, 
+  Tab, 
+  Tabs 
+} from 'native-base'
+import { 
+  maskForDate, 
+  countDays, 
+  getSintomas 
+} from '../../global_components/GlobalFunctions';
+import { 
+  findAllNotRemoved, 
+  updateThis, 
+  getNextMid, 
+  saveThis, 
+  findFirstByFilter 
+} from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
 
-  static navigationOptions = {
-    headerTitle: 'Olá, mamãe!'
-  }
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+
+    return ({
+        headerTitle: 'Olá, mamãe!',
+        headerRight: (
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('RegisterFirstStep', {is_edit: 1})
+            }}>
+                <View>
+                  <Image source={ICONEDIT} style={{height: 24, width: 24, marginEnd: 16}} />
+                </View>
+            </TouchableOpacity>
+        )
+    })
+}
+
 
   constructor(props) {
     super(props)
@@ -183,8 +210,8 @@ export default class UserMainPage extends Component {
     })
   }
 
-  getSemanaGravidez() {
-    let value = countDays(this.state.gravidez.createdAt, new Date()) / 7
+  getSemanaGravidez(date) {
+    let value = countDays(this.state.gravidez.createdAt, date) / 7
     if (value < 1) {
       return this.state.gravidez.semana
     } else {
@@ -319,16 +346,14 @@ export default class UserMainPage extends Component {
         {modal}
         <StatusBar barStyle="light-content" backgroundColor={colorPrimaryDark} />
 
-
         <View style={styles.container}>
-          <View style={{ height: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
-            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.getSemanaGravidez()}ª semana da sua gravidez</Text>
+          <View style={{ minHeight: 30, paddingStart: 16, backgroundColor: colorPrimary }}>
+            <Text style={{ color: white, fontSize: 12, fontWeight: 'bold' }}>Você está na {this.getSemanaGravidez(new Date())}ª semana da sua gravidez</Text>
           </View>
           <Container>
             <Tabs
               initialPage={0}
-              scrollWithoutAnimation={true}
-            >
+              scrollWithoutAnimation={true} >
               <Tab heading="Evolução"
                 activeTextStyle={{ color: white }}
                 activeTabStyle={{ backgroundColor: colorPrimaryDark }}
@@ -336,7 +361,7 @@ export default class UserMainPage extends Component {
                 tabStyle={{ backgroundColor: colorPrimary }}>
 
                 <View style={styles.containerTabs}>
-                  <Text style={styles.titlePage}>Acompanhe aqui sua evolução</Text>
+                  <Text style={styles.titlePage}>Registre aqui a evolução da sua gravidez</Text>
                   <View style={{ flex: 1, marginTop: 16 }}>
 
                     <FlatList
@@ -354,8 +379,9 @@ export default class UserMainPage extends Component {
                             })
                           }}
                           style={{ minHeight: 100, backgroundColor: white, borderWidth: 1, borderColor: fontColor, borderRadius: 15, marginBottom: 16, paddingTop: 10, paddingBottom: 10, paddingStart: 6, paddingEnd: 6, justifyContent: 'center', marginRight: 6 }}>
-                          <View style={{ height: 25, paddingStart: 6 }}>
+                          <View style={{ height: 25, paddingStart: 6, flexDirection: 'row' }}>
                             <Text style={{ color: fontColor }}>{maskForDate(item.data)}</Text>
+                            <Text style={{ color: fontColor }}> - {this.getSemanaGravidez(item.data)}ª semana</Text>
                           </View>
                           <View style={{ minHeight: 50, paddingStart: 6, justifyContent: 'center' }}>
                             <Text style={{ fontSize: 24, color: fontColor }}>Peso: {item.peso}kg, Pressão: {item.pressao_x}/{item.pressao_y}</Text>
@@ -481,20 +507,24 @@ export default class UserMainPage extends Component {
                     <Text style={styles.subtitlePage}>
                       Ao apresentar algum desses sintomas, entre em contato com os profissionais da sua Unidade de Saúde da Família, a Maternidade mais próxima ou um serviço de Emergência
                       </Text>
-                      {getSintomas(1).map((item) => {
-                            return (<View style={styles.cardData}>
-                                <Text style={styles.itemTitle}>{item.name}</Text>
-                                <Text style={styles.subitemTitle}>{item.content}</Text>
-                            </View>)
-                        })}
-                    <View style={{height: 16}} />
+                    {getSintomas(1).map((item) => {
+                      return (<View style={styles.cardData}>
+                        <Text style={styles.itemTitle}>{item.name}</Text>
+                        <Text style={styles.subitemTitle}>{item.content}</Text>
+                      </View>)
+                    })}
+                    <View style={{ height: 16 }} />
                     <Text style={styles.titlePage}>ATENÇÃO:</Text>
                     {getSintomas(2).map((item) => {
-                            return (<View style={styles.cardData}>
-                                <Text style={styles.itemTitle}>{item.name}</Text>
-                                <Text style={styles.subitemTitle}>{item.content}</Text>
-                            </View>)
-                        })}
+                      return (<View style={styles.cardData}>
+                        <Text style={styles.itemTitle}>{item.name}</Text>
+                        <Text>
+                          <Text style={styles.subitemTitle}>{item.content}</Text>
+                          <Text style={[styles.subitemTitle, { fontWeight: 'bold', color: red }]}>{item.valueOnly}</Text>
+                          <Text style={styles.subitemTitle}>{item.content2}</Text>
+                        </Text>
+                      </View>)
+                    })}
 
                   </ScrollView>
                 </View>
