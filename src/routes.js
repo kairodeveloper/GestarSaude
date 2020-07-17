@@ -19,6 +19,7 @@ import ModuloProfissional from './pages/ModuloProfissional';
 import FluxoAtendimentoGestante from './pages/FluxoAtendimentoGestante';
 import CalculadorFatorRisco from './pages/CalculadorFatorRisco';
 import FluxoAtendimento from './pages/user_module/FluxoAtendimento';
+import EditUser from './pages/register_user/EditUser';
 
 const navigationOptions = {
     headerTitleStyle: {
@@ -109,6 +110,10 @@ const RootStack = createStackNavigator({
     },
     CalculadorFatorRisco: {
         screen: CalculadorFatorRisco,
+        navigationOptions: navigationOptions
+    },
+    EditUser: {
+        screen: EditUser,
         navigationOptions: navigationOptions
     }
 },{

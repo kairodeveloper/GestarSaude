@@ -11,22 +11,22 @@ import {
   StatusBar,
   FlatList
 } from 'react-native'
-import { 
-  colorPrimaryDark, 
-  colorPrimary, 
-  colorFundo, 
-  black, 
-  blackSemiTransparent, 
-  white, 
-  fontColor, 
-  red 
+import {
+  colorPrimaryDark,
+  colorPrimary,
+  colorFundo,
+  black,
+  blackSemiTransparent,
+  white,
+  fontColor,
+  red
 } from '../../../colors';
-import { 
-  ICONDOWN, 
-  ICONCHECKED, 
-  ICONHEARTSAUDAVEL, 
-  ICONHEARTRISCO, 
-  ICONCLOSE, 
+import {
+  ICONDOWN,
+  ICONCHECKED,
+  ICONHEARTSAUDAVEL,
+  ICONHEARTRISCO,
+  ICONCLOSE,
   ICONGIRL,
   ICONEDIT
 } from '../../../images'
@@ -34,43 +34,43 @@ import {
   nomeCompletoLabel,
   nomeCompletoPlaceholder
 } from '../../../strings';
-import { 
-  Container, 
-  Tab, 
-  Tabs 
+import {
+  Container,
+  Tab,
+  Tabs
 } from 'native-base'
-import { 
-  maskForDate, 
-  countDays, 
-  getSintomas 
+import {
+  maskForDate,
+  countDays,
+  getSintomas
 } from '../../global_components/GlobalFunctions';
-import { 
-  findAllNotRemoved, 
-  updateThis, 
-  getNextMid, 
-  saveThis, 
-  findFirstByFilter 
+import {
+  findAllNotRemoved,
+  updateThis,
+  getNextMid,
+  saveThis,
+  findFirstByFilter,
+  findFirstUsuario
 } from '../../../realm_services/RealmService';
 
 export default class UserMainPage extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
-
+    let usuario = findFirstUsuario()
     return ({
-        headerTitle: 'Olá, mamãe!',
-        headerRight: (
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('RegisterFirstStep', {is_edit: 1})
-            }}>
-                <View>
-                  <Image source={ICONEDIT} style={{height: 24, width: 24, marginEnd: 16}} />
-                </View>
-            </TouchableOpacity>
-        )
+      headerTitle: 'Olá, mamãe!',
+      headerRight: (
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('EditUser', {is_edit: 1, onGoBack: params.handlerRefreshData })
+        }}>
+          <View>
+            <Image source={ICONEDIT} style={{ height: 24, width: 24, marginEnd: 16 }} />
+          </View>
+        </TouchableOpacity>
+      )
     })
-}
-
+  }
 
   constructor(props) {
     super(props)
@@ -106,6 +106,12 @@ export default class UserMainPage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handlerRefreshData: this.refreshData
+    })
+  }
+
   getEstadoByCodigo(estado) {
     if (estado == 1) {
       return "Saudável"
@@ -122,6 +128,13 @@ export default class UserMainPage extends Component {
     } else {
       return ICONHEARTRISCO
     }
+  }
+
+  refreshData = () => {
+    let gravidez = findFirstByFilter('Gravidez', 'removido = false')
+    this.setState({
+      gravidez: gravidez
+    })
   }
 
   setExameFeito(mid) {
